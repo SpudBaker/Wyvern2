@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>login / register</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class='outerDiv'>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="5"></ion-col>
+        <ion-col>
+          <ion-input [(ngModel)]="inputEmail" color="grey" placeholder="enter email"></ion-input>
+        </ion-col>
+        <ion-col size="5"></ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col size="5"></ion-col>
+        <ion-col>
+          <ion-input [(ngModel)]="inputPassword" type="password" color="grey" placeholder="enter password"></ion-input>
+        </ion-col>
+        <ion-col size="5"></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="5"></ion-col>
+        <ion-col>
+          <ion-button (click)="signIn()" expand="block" color="primary">Sign In</ion-button>
+        </ion-col>
+        <ion-col size="5"></ion-col>
+      </ion-row>
+      <ion-row *ngIf="loginErrMessage">
+        <ion-col size="5"></ion-col>
+        <ion-col size="2">
+          <ion-text color="danger">{{loginErrMessage}}</ion-text>
+        </ion-col>
+        <ion-col size="5"></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="5"></ion-col>
+        <ion-col>
+          <ion-button (click)="resetPassword()" expand="block" color="primary">Password Reset</ion-button>
+        </ion-col>
+        <ion-col size="5"></ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
