@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 
 export class AuthService{
 
+    private userEmail: string;
+
     constructor(private auth: Auth, private router: Router){
         this.getLoginStatus().subscribe();
     }
@@ -17,21 +19,28 @@ export class AuthService{
         return from(createUserWithEmailAndPassword(this.auth, email, password));
     }
 
+    public getAuth(): Auth {
+        return this.auth;
+    }
+
     public getLoginStatus(): Observable<User>{
         return user(this.auth).pipe(
             switchMap(data => {
-                console.log(data);
                 if(data){
-                    console.log('logged in');
+                    this.userEmail = data.email;
                     this.router.navigate(['home']);
                     return of(data); 
                 } else {
-                    console.log('not logged in');
+                    this.userEmail = null;
                     this.router.navigate(['login']);
                     return EMPTY;
                 }
             })
-        )
+        );
+    }
+
+    public getUserEmail(): string {
+        return this.userEmail;
     }
 
     public resetPassword(email: string): Observable<void>{

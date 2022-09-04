@@ -15,6 +15,10 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
+  {
+    path: 'newGame',
+    loadChildren: () => import('./newGame/newGame.module').then( m => m.NewGamePageModule)
+  }
 ];
 
 @NgModule({
