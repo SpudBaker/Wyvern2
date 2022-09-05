@@ -158,11 +158,10 @@ export class NewGamePage {
       const gamesCollection = collection(getFirestore(), "games");
       let matchedDoc: DocumentReference;
       let matchedUserEmail: string;
-      const u = await user(this.authService.getAuth()).pipe(first()).toPromise();
       const q = query(collection(getFirestore(), "games"), where("gameState", "==", Globals.GameState.WAITING_FOR_PLAYERS));
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach(doc => {
-        if (doc.get('player1') != u.email){
+        if (doc.get('player1') != this.authService.getUserEmail()){
           matchedDoc = doc.ref;
           matchedUserEmail = doc.get('player1');
         }
@@ -170,7 +169,7 @@ export class NewGamePage {
       if (!matchedDoc){
         alert('adding new doc');
         addDoc( gamesCollection, {
-          player1: u.email,
+          player1: this.authService.getUserEmail(),
           player1Board: JSON.stringify(this.gameModel),
           gameState: Globals.GameState.WAITING_FOR_PLAYERS
           }
@@ -186,7 +185,7 @@ export class NewGamePage {
             if (sfDoc.get('gameState')===Globals.GameState.WAITING_FOR_PLAYERS) {
               try{
                 alert('game : ' + sfDoc.id +  ' -----  player1 = ' + matchedUserEmail);
-                transaction.update(matchedDoc, { player2: u.email });
+                transaction.update(matchedDoc, { player2: this.authService.getUserEmail() });
                 transaction.update(matchedDoc, { player2Board: JSON.stringify(this.gameModel)});
                 transaction.update(matchedDoc, { gameState: Globals.GameState.IN_PROGRESS });
                 this.router.navigate(['playGame']);
@@ -194,9 +193,9 @@ export class NewGamePage {
                 alert(err);
               }
             } else {
-              alert("Status of document has changed - new game created");
+              alert("Status of existing document changed - new game created");
               addDoc( gamesCollection, {
-                player1: u.email,
+                player1: this.authService.getUserEmail(),
                 player1Board: JSON.stringify(this.gameModel),
                 gameState: Globals.GameState.WAITING_FOR_PLAYERS
                 }
