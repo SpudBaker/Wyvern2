@@ -5,7 +5,7 @@ import { AuthService } from '../services/auth';
 import { User } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DocumentReference } from 'firebase/firestore';
+import { DocumentData } from 'firebase/firestore';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +13,7 @@ import { DocumentReference } from 'firebase/firestore';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  public hasIncompleteGames = new Array<DocumentReference>;
+  public hasIncompleteGames = new Array<DocumentData>;
   public login$: Observable<User>;
   public loginErrMessage: string;
   public inputEmail: string;
@@ -26,12 +26,10 @@ export class HomePage {
         return data;
       })
     );
-    
   }
 
   private populateIncompleteGames(){
     this.gameService.hasIncompleteGame().then(data => {
-      console.log(data);
       this.hasIncompleteGames = data;
     });
   }
@@ -50,6 +48,10 @@ export class HomePage {
       this.loginErrMessage = 'Enter both email and password';
       return;
     }
+  }
+  
+  public viewGamesButtonPress(){
+    this.router.navigate(['gamesInPlay']);
   }
 
 }

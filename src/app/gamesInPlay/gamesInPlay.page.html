@@ -1,0 +1,24 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Games In Play
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class='outerDiv'>
+    <ion-grid>
+      <div *ngFor="let game of games">
+        <ion-row>
+          <ion-col size="4"></ion-col>
+          <ion-col align="center">
+            <ion-button (click)="gameButtonPress()" expand="block" color="primary">{{game.data().player1}}</ion-button>
+          </ion-col>
+          <ion-col size="4"></ion-col>
+        </ion-row>
+      </div>
+    </ion-grid>
+  </div>
+</ion-content>
+

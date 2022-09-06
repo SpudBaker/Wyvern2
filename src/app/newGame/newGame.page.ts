@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import * as Globals from '../../globals';
-import { addDoc, collection, DocumentReference, getDocs, getFirestore, query, runTransaction, where } from '@angular/fire/firestore';
-import { first } from 'rxjs/operators';
-import { AuthService } from '../services/auth';
-import { user } from '@angular/fire/auth';
+import { GameService } from '../services/game';
 
 @Component({
   selector: 'app-newGame',
@@ -17,7 +14,7 @@ export class NewGamePage {
   public gameModel = new Globals.GameModel();
   public Orientation = Globals.Orientation;
 
-  constructor(private authService: AuthService,private router: Router) {
+  constructor(private gameService: GameService, private router: Router) {
   }
 
   edgeClick(orientation: Globals.Orientation, h:number, v: number){
@@ -154,57 +151,10 @@ export class NewGamePage {
     return false;
   }
 
-  async continue() {
-      const gamesCollection = collection(getFirestore(), "games");
-      let matchedDoc: DocumentReference;
-      let matchedUserEmail: string;
-      const q = query(collection(getFirestore(), "games"), where("gameState", "==", Globals.GameState.WAITING_FOR_PLAYERS));
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach(doc => {
-        if (doc.get('player1') != this.authService.getUserEmail()){
-          matchedDoc = doc.ref;
-          matchedUserEmail = doc.get('player1');
-        }
-      });
-      if (!matchedDoc){
-        alert('adding new doc');
-        addDoc( gamesCollection, {
-          player1: this.authService.getUserEmail(),
-          player1Board: JSON.stringify(this.gameModel),
-          gameState: Globals.GameState.WAITING_FOR_PLAYERS
-          }
-        )
-        .then(() => this.router.navigate(['playGame']))
-        .catch(err => alert(err))
-      } else {
-        await runTransaction(getFirestore(), async (transaction) => {
-          const sfDoc = await transaction.get(matchedDoc);
-          if (!sfDoc.exists()) {
-            alert("Document does not exist!");
-          } else {
-            if (sfDoc.get('gameState')===Globals.GameState.WAITING_FOR_PLAYERS) {
-              try{
-                alert('game : ' + sfDoc.id +  ' -----  player1 = ' + matchedUserEmail);
-                transaction.update(matchedDoc, { player2: this.authService.getUserEmail() });
-                transaction.update(matchedDoc, { player2Board: JSON.stringify(this.gameModel)});
-                transaction.update(matchedDoc, { gameState: Globals.GameState.IN_PROGRESS });
-                this.router.navigate(['playGame']);
-              }catch(err) {
-                alert(err);
-              }
-            } else {
-              alert("Status of existing document changed - new game created");
-              addDoc( gamesCollection, {
-                player1: this.authService.getUserEmail(),
-                player1Board: JSON.stringify(this.gameModel),
-                gameState: Globals.GameState.WAITING_FOR_PLAYERS
-                }
-              )
-              .then(() => this.router.navigate(['playGame']))
-              .catch(err => alert(err))
-            }
-          }
-        }).catch(err => alert(err));
-      }
+  continue(){
+    this.gameService.continue(this.gameModel)
+    .then(() => this.router.navigate(['playGame']))
+    .catch(err => alert(err));
   }
+
 }
