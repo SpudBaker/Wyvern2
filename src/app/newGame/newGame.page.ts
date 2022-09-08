@@ -153,7 +153,7 @@ export class NewGamePage {
 
   continue(){
     this.gameService.continue(this.gameModel)
-    .then(() => this.router.navigate(['playGame']))
+    .then(() => this.router.navigate(['game']))
     .catch(err => alert(err));
   }
 
