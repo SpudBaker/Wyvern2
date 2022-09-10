@@ -13,7 +13,7 @@ import { DocumentData } from 'firebase/firestore';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  public hasIncompleteGames = new Array<DocumentData>;
+  public incompleteGames = new Array<DocumentData>;
   public login$: Observable<User>;
   public loginErrMessage: string;
   public inputEmail: string;
@@ -29,8 +29,8 @@ export class HomePage {
   }
 
   private populateIncompleteGames(){
-    this.gameService.hasIncompleteGame().then(data => {
-      this.hasIncompleteGames = data;
+    this.gameService.getIncompleteGames().then(data => {
+      this.incompleteGames = data;
     });
   }
 

@@ -7,9 +7,11 @@ import { AuthService } from '../services/auth';
 
 export class GameService{
 
+    publicGameInPlay: Globals.GameModel;
+
     constructor(private authService: AuthService){}
 
-    public async hasIncompleteGame(): Promise<DocumentData[]> {
+    public async getIncompleteGames(): Promise<DocumentData[]> {
         let games = new Array<DocumentData>;
         const qPlayer1 = query(collection(getFirestore(), "games"), where("gameState", "in", 
             [Globals.GameState.WAITING_FOR_PLAYERS, Globals.GameState.IN_PROGRESS]), where("player1", "==", this.authService.getUserEmail()));

@@ -15,7 +15,7 @@ export class GamesInPlayPage {
   public games: DocumentData[];
 
   constructor(private authService: AuthService, private gameService: GameService, private router: Router) {
-    this.gameService.hasIncompleteGame()
+    this.gameService.getIncompleteGames()
     .then(games => {
       this.games = games;
     });
