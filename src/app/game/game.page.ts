@@ -12,7 +12,11 @@ import { AuthService } from '../services/auth';
 })
 export class GamePage {
 
+  game: Globals.Game;
+
   constructor(private authService: AuthService, private gameService: GameService, private router: Router) {
+    this.game = this.gameService.gameInPlay;
+    console.log(this.game);
   }
 
 }

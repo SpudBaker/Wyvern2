@@ -30,6 +30,15 @@ export class Piece {
     this.vertical = vertical;
   }
 }
+
+export class Game {
+  id: string;
+  gameState: GameState;
+  player1: string;
+  player1Board: GameModel;
+  player2: string;
+  player2Board: GameModel;
+}
   
 export class GameModel {
   horizontalEdges: EdgeState[][] = [
