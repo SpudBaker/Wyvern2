@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { DocumentData } from 'firebase/firestore';
+import { Subscription } from 'rxjs';
 import * as Globals from '../../globals';
 import { GameService } from '../services/game';
-import { AuthService } from '../services/auth';
 
 @Component({
   selector: 'app-game',
@@ -13,10 +12,10 @@ import { AuthService } from '../services/auth';
 export class GamePage {
 
   game: Globals.Game;
+  gameSubscription: Subscription;
 
-  constructor(private authService: AuthService, private gameService: GameService, private router: Router) {
-    this.game = this.gameService.gameInPlay;
-    console.log(this.game);
+  constructor(private gameService: GameService, private router: Router) {
+    this.gameSubscription = this.gameService.getCurrentGameObservable().subscribe(res => this.game = res);
   }
 
 }

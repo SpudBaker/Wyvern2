@@ -5,7 +5,7 @@ import { AuthService } from '../services/auth';
 import { User } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DocumentData } from 'firebase/firestore';
+import * as Globals from '../../globals';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +13,7 @@ import { DocumentData } from 'firebase/firestore';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  public incompleteGames = new Array<DocumentData>;
+  public incompleteGames = new Array<Globals.Game>;
   public login$: Observable<User>;
   public loginErrMessage: string;
   public inputEmail: string;

@@ -13,6 +13,7 @@ export class NewGamePage {
   public EdgeState = Globals.EdgeState;
   public gameModel = new Globals.GameModel();
   public Orientation = Globals.Orientation;
+  public creatingGame = false;
 
   constructor(private gameService: GameService, private router: Router) {
   }
@@ -152,9 +153,13 @@ export class NewGamePage {
   }
 
   continue(){
+    this.creatingGame = true;
     this.gameService.continue(this.gameModel)
     .then(() => this.router.navigate(['game']))
-    .catch(err => alert(err));
+    .catch(err => {
+      this.creatingGame = false;
+      alert(err);
+    });
   }
 
 }

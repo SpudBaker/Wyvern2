@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { addDoc, collection, DocumentData, DocumentReference, getDocs, getFirestore, query, runTransaction, where } from '@angular/fire/firestore';
-import { getDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, docSnapshots, DocumentData, DocumentReference, DocumentSnapshot, getDoc, getDocs, getFirestore, query, runTransaction, where } from '@angular/fire/firestore';
 import * as Globals from '../,,/../../globals';
 import { AuthService } from '../services/auth';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 
@@ -52,10 +53,17 @@ export class GameService{
         }
     }
 
-    private convertDocTGameObject(doc: DocumentData): Globals.Game{
+    public convertDocTGameObject(doc: DocumentData): Globals.Game{
       const retval: Globals.Game = doc.data() as Globals.Game;
       retval.id = doc.id;
       return retval;
+    }
+
+    public getCurrentGameObservable(): Observable<Globals.Game>{
+      const docRef = doc(getFirestore(), "games", this.gameInPlay.id) as DocumentReference;
+      return docSnapshots(docRef).pipe(
+        map(docRef => this.convertDocTGameObject(docRef))
+      );
     }
     
     public async getIncompleteGames(): Promise<Globals.Game[]> {
