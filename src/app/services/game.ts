@@ -54,9 +54,14 @@ export class GameService{
     }
 
     public convertDocTGameObject(doc: DocumentData): Globals.Game{
-      const retval: Globals.Game = doc.data() as Globals.Game;
-      retval.id = doc.id;
-      return retval;
+      const game: Globals.Game = new Globals.Game();
+      game.id = doc.id;
+      game.gameState = doc.data().gameState;
+      game.player1 = doc.data().player1;
+      game.player2 = doc.data().player2;
+      game.player1Board = doc.data().player1Board ? JSON.parse(doc.data().player1Board) : undefined;
+      game.player2Board = doc.data().player2Board ? JSON.parse(doc.data().player2Board) : undefined;
+      return game;
     }
 
     public getCurrentGameObservable(): Observable<Globals.Game>{

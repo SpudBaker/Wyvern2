@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import * as Globals from '../../globals';
+import { AuthService } from '../services/auth';
 import { GameService } from '../services/game';
 
 @Component({
@@ -11,11 +13,23 @@ import { GameService } from '../services/game';
 })
 export class GamePage {
 
-  game: Globals.Game;
-  gameSubscription: Subscription;
+  gameModel$: Observable< Globals.GameModel>;
 
-  constructor(private gameService: GameService, private router: Router) {
-    this.gameSubscription = this.gameService.getCurrentGameObservable().subscribe(res => this.game = res);
+  constructor(private authService: AuthService, private gameService: GameService, private router: Router) {
+    this.gameModel$ = this.gameService.getCurrentGameObservable()
+    .pipe(
+      map(game => {
+        let retVal; 
+        if(game.player1 == this.authService.getUserEmail()){
+          retVal = game.player1Board;
+        } else {
+          retVal = game.player2Board;
+        }
+        console.log('this is the return value');
+        console.log(retVal);
+        console.log('specifically ...');
+        console.log(retVal.verticalEdges)
+        return retVal;
+      })
+    )}
   }
-
-}
