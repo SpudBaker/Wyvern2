@@ -129,35 +129,35 @@
       <div class="edge edgeBorderVertical edgeColumn0 edgeRow5" [ngClass]="gameModel.verticalEdges[0][5]"></div>
       <div class="edge edgeBorderVertical edgeColumn6 edgeRow5" [ngClass]="gameModel.verticalEdges[6][5]"></div>
   
-      <div class="corner edgeColumn1 edgeRow1" [ngClass]="getCornerState(1,1)"></div>
-      <div class="corner edgeColumn2 edgeRow1" [ngClass]="getCornerState(2,1)"></div>
-      <div class="corner edgeColumn3 edgeRow1" [ngClass]="getCornerState(3,1)"></div>
-      <div class="corner edgeColumn4 edgeRow1" [ngClass]="getCornerState(4,1)"></div>
-      <div class="corner edgeColumn5 edgeRow1" [ngClass]="getCornerState(5,1)"></div>
+      <div class="corner edgeColumn1 edgeRow1" [ngClass]="getCornerState(gameModel,1,1)"></div>
+      <div class="corner edgeColumn2 edgeRow1" [ngClass]="getCornerState(gameModel,2,1)"></div>
+      <div class="corner edgeColumn3 edgeRow1" [ngClass]="getCornerState(gameModel,3,1)"></div>
+      <div class="corner edgeColumn4 edgeRow1" [ngClass]="getCornerState(gameModel,4,1)"></div>
+      <div class="corner edgeColumn5 edgeRow1" [ngClass]="getCornerState(gameModel,5,1)"></div>
   
-      <div class="corner edgeColumn1 edgeRow2" [ngClass]="getCornerState(1,2)"></div>
-      <div class="corner edgeColumn2 edgeRow2" [ngClass]="getCornerState(2,2)"></div>
-      <div class="corner edgeColumn3 edgeRow2" [ngClass]="getCornerState(3,2)"></div>
-      <div class="corner edgeColumn4 edgeRow2" [ngClass]="getCornerState(4,2)"></div>
-      <div class="corner edgeColumn5 edgeRow2" [ngClass]="getCornerState(5,2)"></div>
+      <div class="corner edgeColumn1 edgeRow2" [ngClass]="getCornerState(gameModel,1,2)"></div>
+      <div class="corner edgeColumn2 edgeRow2" [ngClass]="getCornerState(gameModel,2,2)"></div>
+      <div class="corner edgeColumn3 edgeRow2" [ngClass]="getCornerState(gameModel,3,2)"></div>
+      <div class="corner edgeColumn4 edgeRow2" [ngClass]="getCornerState(gameModel,4,2)"></div>
+      <div class="corner edgeColumn5 edgeRow2" [ngClass]="getCornerState(gameModel,5,2)"></div>
   
-      <div class="corner edgeColumn1 edgeRow3" [ngClass]="getCornerState(1,3)"></div>
-      <div class="corner edgeColumn2 edgeRow3" [ngClass]="getCornerState(2,3)"></div>
-      <div class="corner edgeColumn3 edgeRow3" [ngClass]="getCornerState(3,3)"></div>
-      <div class="corner edgeColumn4 edgeRow3" [ngClass]="getCornerState(4,3)"></div>
-      <div class="corner edgeColumn5 edgeRow3" [ngClass]="getCornerState(5,3)"></div>
+      <div class="corner edgeColumn1 edgeRow3" [ngClass]="getCornerState(gameModel,1,3)"></div>
+      <div class="corner edgeColumn2 edgeRow3" [ngClass]="getCornerState(gameModel,2,3)"></div>
+      <div class="corner edgeColumn3 edgeRow3" [ngClass]="getCornerState(gameModel,3,3)"></div>
+      <div class="corner edgeColumn4 edgeRow3" [ngClass]="getCornerState(gameModel,4,3)"></div>
+      <div class="corner edgeColumn5 edgeRow3" [ngClass]="getCornerState(gameModel,5,3)"></div>
   
-      <div class="corner edgeColumn1 edgeRow4" [ngClass]="getCornerState(1,4)"></div>
-      <div class="corner edgeColumn2 edgeRow4" [ngClass]="getCornerState(2,4)"></div>
-      <div class="corner edgeColumn3 edgeRow4" [ngClass]="getCornerState(3,4)"></div>
-      <div class="corner edgeColumn4 edgeRow4" [ngClass]="getCornerState(4,4)"></div>
-      <div class="corner edgeColumn5 edgeRow4" [ngClass]="getCornerState(5,4)"></div>
+      <div class="corner edgeColumn1 edgeRow4" [ngClass]="getCornerState(gameModel,1,4)"></div>
+      <div class="corner edgeColumn2 edgeRow4" [ngClass]="getCornerState(gameModel,2,4)"></div>
+      <div class="corner edgeColumn3 edgeRow4" [ngClass]="getCornerState(gameModel,3,4)"></div>
+      <div class="corner edgeColumn4 edgeRow4" [ngClass]="getCornerState(gameModel,4,4)"></div>
+      <div class="corner edgeColumn5 edgeRow4" [ngClass]="getCornerState(gameModel,5,4)"></div>
   
-      <div class="corner edgeColumn1 edgeRow5" [ngClass]="getCornerState(1,5)"></div>
-      <div class="corner edgeColumn2 edgeRow5" [ngClass]="getCornerState(2,5)"></div>
-      <div class="corner edgeColumn3 edgeRow5" [ngClass]="getCornerState(3,5)"></div>
-      <div class="corner edgeColumn4 edgeRow5" [ngClass]="getCornerState(4,5)"></div>
-      <div class="corner edgeColumn5 edgeRow5" [ngClass]="getCornerState(5,5)"></div>
+      <div class="corner edgeColumn1 edgeRow5" [ngClass]="getCornerState(gameModel,1,5)"></div>
+      <div class="corner edgeColumn2 edgeRow5" [ngClass]="getCornerState(gameModel,2,5)"></div>
+      <div class="corner edgeColumn3 edgeRow5" [ngClass]="getCornerState(gameModel,3,5)"></div>
+      <div class="corner edgeColumn4 edgeRow5" [ngClass]="getCornerState(gameModel,4,5)"></div>
+      <div class="corner edgeColumn5 edgeRow5" [ngClass]="getCornerState(gameModel,5,5)"></div>
   
       <div class="marker" [ngClass]="'pieceColumn' + gameModel.marker.horizontal + ' pieceRow' + gameModel.marker.vertical"></div>
       <div class="target" [ngClass]="'pieceColumn' + gameModel.target.horizontal + ' pieceRow' + gameModel.target.vertical"></div>

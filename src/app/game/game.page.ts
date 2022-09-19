@@ -25,11 +25,33 @@ export class GamePage {
         } else {
           retVal = game.player2Board;
         }
-        console.log('this is the return value');
-        console.log(retVal);
-        console.log('specifically ...');
-        console.log(retVal.verticalEdges)
         return retVal;
       })
     )}
+
+    getCornerState(gameModel: Globals.GameModel, h: number, v:number): string {
+      try{
+        if(gameModel.horizontalEdges[h][v] === Globals.EdgeState.Wall) { 
+          return Globals.EdgeState.Border
+        } 
+      } catch {}
+      try{
+        if(gameModel.horizontalEdges[h-1][v] === Globals.EdgeState.Wall) { 
+          return Globals.EdgeState.Border
+        }
+      } catch {}
+      try{
+        if(gameModel.verticalEdges[h][v] === Globals.EdgeState.Wall) { 
+          return Globals.EdgeState.Border
+        }
+      } catch {}
+      try{
+        if(gameModel.verticalEdges[h][v-1] === Globals.EdgeState.Wall) { 
+          return Globals.EdgeState.Border
+        }
+      } catch {}
+      return Globals.EdgeState.Unknown;
+    }
+
+
   }

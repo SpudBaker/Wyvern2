@@ -10,7 +10,6 @@ import { GameService } from '../services/game';
 })
 export class NewGamePage {
 
-  public EdgeState = Globals.EdgeState;
   public gameModel = new Globals.GameModel();
   public Orientation = Globals.Orientation;
   public creatingGame = false;
@@ -22,13 +21,13 @@ export class NewGamePage {
     switch (orientation){
       case this.Orientation.Horizontal: {
         switch(this.gameModel.horizontalEdges[h][v]) {
-          case this.EdgeState.Unknown: {
-            this.gameModel.horizontalEdges[h][v] = this.EdgeState.Wall;
+          case Globals.EdgeState.Unknown: {
+            this.gameModel.horizontalEdges[h][v] = Globals.EdgeState.Wall;
             this.checkIfValidRouteExists();
             break;
           }
-          case this.EdgeState.Wall:
-            this.gameModel.horizontalEdges[h][v] = this.EdgeState.Unknown;
+          case Globals.EdgeState.Wall:
+            this.gameModel.horizontalEdges[h][v] = Globals.EdgeState.Unknown;
             this.checkIfValidRouteExists();
             break;
           }
@@ -36,13 +35,13 @@ export class NewGamePage {
         break;
       case this.Orientation.Vertical:{
         switch(this.gameModel.verticalEdges[h][v]) {
-          case this.EdgeState.Unknown: {
-            this.gameModel.verticalEdges[h][v] = this.EdgeState.Wall;
+          case Globals.EdgeState.Unknown: {
+            this.gameModel.verticalEdges[h][v] = Globals.EdgeState.Wall;
             this.checkIfValidRouteExists();
             break;
           }
           case Globals.EdgeState.Wall:
-            this.gameModel.verticalEdges[h][v] = this.EdgeState.Unknown;
+            this.gameModel.verticalEdges[h][v] = Globals.EdgeState.Unknown;
             this.checkIfValidRouteExists();
             break;
           }
@@ -59,22 +58,22 @@ export class NewGamePage {
 
   getCornerState(h: number, v:number): string {
     try{
-      if(this.gameModel.horizontalEdges[h][v] === this.EdgeState.Wall) { 
+      if(this.gameModel.horizontalEdges[h][v] === Globals.EdgeState.Wall) { 
         return Globals.EdgeState.Border
       } 
     } catch {}
     try{
-      if(this.gameModel.horizontalEdges[h-1][v] === this.EdgeState.Wall) { 
+      if(this.gameModel.horizontalEdges[h-1][v] === Globals.EdgeState.Wall) { 
         return Globals.EdgeState.Border
       }
     } catch {}
     try{
-      if(this.gameModel.verticalEdges[h][v] === this.EdgeState.Wall) { 
+      if(this.gameModel.verticalEdges[h][v] === Globals.EdgeState.Wall) { 
         return Globals.EdgeState.Border
       }
     } catch {}
     try{
-      if(this.gameModel.verticalEdges[h][v-1] === this.EdgeState.Wall) { 
+      if(this.gameModel.verticalEdges[h][v-1] === Globals.EdgeState.Wall) { 
         return Globals.EdgeState.Border
       }
     } catch {}
@@ -107,32 +106,32 @@ export class NewGamePage {
     let counter = 0
     if (v > 0) {
       if (this.gameModel.squares[h][v-1] === Globals.SquareState.Unknown 
-            && this.gameModel.horizontalEdges[h][v] !== this.EdgeState.Wall 
-            && this.gameModel.horizontalEdges[h][v] !== this.EdgeState.Border ){
+            && this.gameModel.horizontalEdges[h][v] !== Globals.EdgeState.Wall 
+            && this.gameModel.horizontalEdges[h][v] !== Globals.EdgeState.Border ){
         this.gameModel.squares[h][v-1] = Globals.SquareState.ReachableNotChecked;
         counter ++;
       }
     }
     if (h > 0) {  
       if (this.gameModel.squares[h-1][v] === Globals.SquareState.Unknown
-            && this.gameModel.verticalEdges[h][v] !== this.EdgeState.Wall 
-            && this.gameModel.verticalEdges[h][v] !== this.EdgeState.Border ) {
+            && this.gameModel.verticalEdges[h][v] !== Globals.EdgeState.Wall 
+            && this.gameModel.verticalEdges[h][v] !== Globals.EdgeState.Border ) {
         this.gameModel.squares[h-1][v] = Globals.SquareState.ReachableNotChecked;
         counter ++;
       }
     }
     if (v < 5) {
       if (this.gameModel.squares[h][v+1] === Globals.SquareState.Unknown
-            && this.gameModel.horizontalEdges[h][v+1] !== this.EdgeState.Wall 
-            && this.gameModel.horizontalEdges[h][v+1] !== this.EdgeState.Border ) {
+            && this.gameModel.horizontalEdges[h][v+1] !== Globals.EdgeState.Wall 
+            && this.gameModel.horizontalEdges[h][v+1] !== Globals.EdgeState.Border ) {
         this.gameModel.squares[h][v+1] = Globals.SquareState.ReachableNotChecked;
         counter ++;
       }
     }
     if (h < 5) {
       if (this.gameModel.squares[h+1][v] === Globals.SquareState.Unknown
-            && this.gameModel.verticalEdges[h+1][v] !== this.EdgeState.Wall 
-            && this.gameModel.verticalEdges[h+1][v] !== this.EdgeState.Border
+            && this.gameModel.verticalEdges[h+1][v] !== Globals.EdgeState.Wall 
+            && this.gameModel.verticalEdges[h+1][v] !== Globals.EdgeState.Border
         ) {
         this.gameModel.squares[h+1][v] = Globals.SquareState.ReachableNotChecked;
         counter ++;

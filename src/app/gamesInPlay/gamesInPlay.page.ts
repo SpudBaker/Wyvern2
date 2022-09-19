@@ -34,8 +34,6 @@ export class GamesInPlayPage {
 
   public gameButtonPress(game: Globals.Game){
     this.gameService.gameInPlay = game;
-    console.log('game button press');
-      console.log(this.gameService.gameInPlay);
     this.router.navigate(['game']);
   } 
 
