@@ -1,5 +1,9 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-icon slot="icon-only"></ion-icon>
+      <ion-icon slot="icon-only" name="home" (click)="gameService.navigateHome()"></ion-icon>
+    </ion-buttons>
     <ion-title>
       Create Game Board
     </ion-title>

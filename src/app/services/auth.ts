@@ -52,7 +52,7 @@ export class AuthService{
     }
 
     public signOut(){
-        signOut(this.auth).then(res => console.log(res));
+        signOut(this.auth);
     }
 
 }

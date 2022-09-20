@@ -25,7 +25,6 @@ export class LoginPage {
     .pipe(
       first(),
       catchError(err => {
-        console.log('register error');
         switch (err.code){
           case ('auth/invalid-email'):
             this.loginErrMessage = 'Enter the correct email format';
@@ -45,7 +44,6 @@ export class LoginPage {
   }
 
   public resetPassword(){
-    console.log('login page - password reset');
     this.loginErrMessage = null;
     if (!this.inputEmail){
       this.loginErrMessage = 'Enter an email to reset your password';

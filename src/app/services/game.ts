@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { addDoc, collection, doc, docSnapshots, DocumentData, DocumentReference, DocumentSnapshot, getDoc, getDocs, getFirestore, query, runTransaction, where } from '@angular/fire/firestore';
 import * as Globals from '../,,/../../globals';
 import { AuthService } from '../services/auth';
@@ -11,7 +12,7 @@ export class GameService{
 
     public gameInPlay: Globals.Game;
 
-    constructor(private authService: AuthService){}
+    constructor(private authService: AuthService, private router: Router){}
 
     public async continue(gameModel: Globals.GameModel): Promise<void> {
         const gamesCollection = collection(getFirestore(), "games");
@@ -88,5 +89,9 @@ export class GameService{
               
       )
       return games;
-  }
+    }
+
+    public navigateHome(): void {
+      this.router.navigate(['home']);
+    }
 }

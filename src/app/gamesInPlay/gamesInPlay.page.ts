@@ -20,16 +20,20 @@ export class GamesInPlayPage {
     });
   }
 
-  public getOpposingPlayer(game: Globals.Game): string{ 
-    if((game?.player1 as string).toLocaleLowerCase() == this.authService.getUserEmail().toLocaleLowerCase()){
-      if(game?.player2){
-        return (game?.player2 as string).toLocaleLowerCase();
-      } else {
-        return 'unmatched';
-      }
-    } else {
-      return (game.player1 as string).toLocaleLowerCase();
+  public getButtonText(game: Globals.Game): string{ 
+    let retval: string;
+    switch (game.gameState){
+      case Globals.GameState.WAITING_FOR_PLAYERS: 
+        retval = 'Waiting for opponent';
+        break;
+      case Globals.GameState.FINISHED:
+        retval = 'Finished';
+        break;
+      case Globals.GameState.IN_PROGRESS:
+        retval = 'Game in Progress';
+        break;
     }
+    return retval;
   }
 
   public gameButtonPress(game: Globals.Game){
