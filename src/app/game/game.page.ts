@@ -25,6 +25,7 @@ export class GamePage {
         } else {
           retVal = game.player2Board;
         }
+        console.log(retVal);
         return retVal;
       })
     )}
@@ -51,6 +52,14 @@ export class GamePage {
         }
       } catch {}
       return Globals.EdgeState.Unknown;
+    }
+
+    getSquareVisited(gameModel: Globals.GameModel, h: number, v:number): string {
+      if (gameModel.squares[h][v] === Globals.SquareState.Visited) {
+        return 'squareVisited';
+      } else {
+        return 'squareUnvisited';
+      }
     }
 
 

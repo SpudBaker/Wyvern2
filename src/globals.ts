@@ -19,7 +19,8 @@ export enum Orientation {
 export enum SquareState {
   Unknown,
   ReachableNotChecked,
-  ReachableChecked
+  ReachableChecked,
+  Visited
 }
 
 export class Piece {

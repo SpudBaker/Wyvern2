@@ -13,41 +13,41 @@
 <ion-content>
   <div class="divOuterLeft" *ngIf="gameModel$ | async as gameModel">
       <div class="square squareVisited squareColumn0 squareRow0"></div>
-      <div (click)="squareClick(1, 0)" class="square squareUnvisited squareColumn1 squareRow0"></div>
-      <div (click)="squareClick(2, 0)" class="square squareUnvisited squareColumn2 squareRow0"></div>
-      <div (click)="squareClick(3, 0)" class="square squareUnvisited squareColumn3 squareRow0"></div>
-      <div (click)="squareClick(4, 0)" class="square squareUnvisited squareColumn4 squareRow0"></div>
-      <div (click)="squareClick(5, 0)" class="square squareUnvisited squareColumn5 squareRow0"></div>
-      <div (click)="squareClick(0, 1)" class="square squareUnvisited squareColumn0 squareRow1"></div>
-      <div (click)="squareClick(1, 1)" class="square squareUnvisited squareColumn1 squareRow1"></div>
-      <div (click)="squareClick(2, 1)" class="square squareUnvisited squareColumn2 squareRow1"></div>
-      <div (click)="squareClick(3, 1)" class="square squareUnvisited squareColumn3 squareRow1"></div>
-      <div (click)="squareClick(4, 1)" class="square squareUnvisited squareColumn4 squareRow1"></div>
-      <div (click)="squareClick(5, 1)" class="square squareUnvisited squareColumn5 squareRow1"></div>
-      <div (click)="squareClick(0, 2)" class="square squareUnvisited squareColumn0 squareRow2"></div>
-      <div (click)="squareClick(1, 2)" class="square squareUnvisited squareColumn1 squareRow2"></div>
-      <div (click)="squareClick(2, 2)" class="square squareUnvisited squareColumn2 squareRow2"></div>
-      <div (click)="squareClick(3, 2)" class="square squareUnvisited squareColumn3 squareRow2"></div>
-      <div (click)="squareClick(4, 2)" class="square squareUnvisited squareColumn4 squareRow2"></div>
-      <div (click)="squareClick(5, 2)" class="square squareUnvisited squareColumn5 squareRow2"></div>
-      <div (click)="squareClick(0, 3)" class="square squareUnvisited squareColumn0 squareRow3"></div>
-      <div (click)="squareClick(1, 3)" class="square squareUnvisited squareColumn1 squareRow3"></div>
-      <div (click)="squareClick(2, 3)" class="square squareUnvisited squareColumn2 squareRow3"></div>
-      <div (click)="squareClick(3, 3)" class="square squareUnvisited squareColumn3 squareRow3"></div>
-      <div (click)="squareClick(4, 3)" class="square squareUnvisited squareColumn4 squareRow3"></div>
-      <div (click)="squareClick(5, 3)" class="square squareUnvisited squareColumn5 squareRow3"></div>
-      <div (click)="squareClick(0, 4)" class="square squareUnvisited squareColumn0 squareRow4"></div>
-      <div (click)="squareClick(1, 4)" class="square squareUnvisited squareColumn1 squareRow4"></div>
-      <div (click)="squareClick(2, 4)" class="square squareUnvisited squareColumn2 squareRow4"></div>
-      <div (click)="squareClick(3, 4)" class="square squareUnvisited squareColumn3 squareRow4"></div>
-      <div (click)="squareClick(4, 4)" class="square squareUnvisited squareColumn4 squareRow4"></div>
-      <div (click)="squareClick(5, 4)" class="square squareUnvisited squareColumn5 squareRow4"></div>
-      <div (click)="squareClick(0, 5)" class="square squareUnvisited squareColumn0 squareRow5"></div>
-      <div (click)="squareClick(1, 5)" class="square squareUnvisited squareColumn1 squareRow5"></div>
-      <div (click)="squareClick(2, 5)" class="square squareUnvisited squareColumn2 squareRow5"></div>
-      <div (click)="squareClick(3, 5)" class="square squareUnvisited squareColumn3 squareRow5"></div>
-      <div (click)="squareClick(4, 5)" class="square squareUnvisited squareColumn4 squareRow5"></div>
-      <div (click)="squareClick(5, 5)" class="square squareUnvisited squareColumn5 squareRow5"></div>
+      <div (click)="squareClick(1, 0)" [ngClass]= "getSquareVisited(gameModel, 1, 0)" class="square  squareColumn1 squareRow0"></div>
+      <div (click)="squareClick(2, 0)" [ngClass]= "getSquareVisited(gameModel, 2, 0)" class="square squareColumn2 squareRow0"></div>
+      <div (click)="squareClick(3, 0)" [ngClass]= "getSquareVisited(gameModel, 3, 0)" class="square squareColumn3 squareRow0"></div>
+      <div (click)="squareClick(4, 0)" [ngClass]= "getSquareVisited(gameModel, 4, 0)" class="square squareColumn4 squareRow0"></div>
+      <div (click)="squareClick(5, 0)" [ngClass]= "getSquareVisited(gameModel, 5, 0)" class="square squareColumn5 squareRow0"></div>
+      <div (click)="squareClick(0, 1)" [ngClass]= "getSquareVisited(gameModel, 0, 0)" class="square squareColumn0 squareRow1"></div>
+      <div (click)="squareClick(1, 1)" [ngClass]= "getSquareVisited(gameModel, 1, 1)" class="square squareColumn1 squareRow1"></div>
+      <div (click)="squareClick(2, 1)" [ngClass]= "getSquareVisited(gameModel, 2, 1)" class="square squareColumn2 squareRow1"></div>
+      <div (click)="squareClick(3, 1)" [ngClass]= "getSquareVisited(gameModel, 3, 1)" class="square squareColumn3 squareRow1"></div>
+      <div (click)="squareClick(4, 1)" [ngClass]= "getSquareVisited(gameModel, 4, 1)" class="square squareColumn4 squareRow1"></div>
+      <div (click)="squareClick(5, 1)" [ngClass]= "getSquareVisited(gameModel, 5, 1)" class="square squareColumn5 squareRow1"></div>
+      <div (click)="squareClick(0, 2)" [ngClass]= "getSquareVisited(gameModel, 0, 2)" class="square squareColumn0 squareRow2"></div>
+      <div (click)="squareClick(1, 2)" [ngClass]= "getSquareVisited(gameModel, 1, 2)" class="square squareColumn1 squareRow2"></div>
+      <div (click)="squareClick(2, 2)" [ngClass]= "getSquareVisited(gameModel, 2, 2)" class="square squareColumn2 squareRow2"></div>
+      <div (click)="squareClick(3, 2)" [ngClass]= "getSquareVisited(gameModel, 3, 2)" class="square squareColumn3 squareRow2"></div>
+      <div (click)="squareClick(4, 2)" [ngClass]= "getSquareVisited(gameModel, 4, 2)" class="square squareColumn4 squareRow2"></div>
+      <div (click)="squareClick(5, 2)" [ngClass]= "getSquareVisited(gameModel, 5, 2)" class="square squareColumn5 squareRow2"></div>
+      <div (click)="squareClick(0, 3)" [ngClass]= "getSquareVisited(gameModel, 0, 3)" class="square squareColumn0 squareRow3"></div>
+      <div (click)="squareClick(1, 3)" [ngClass]= "getSquareVisited(gameModel, 1, 3)" class="square squareColumn1 squareRow3"></div>
+      <div (click)="squareClick(2, 3)" [ngClass]= "getSquareVisited(gameModel, 2, 3)" class="square squareColumn2 squareRow3"></div>
+      <div (click)="squareClick(3, 3)" [ngClass]= "getSquareVisited(gameModel, 3, 3)" class="square squareColumn3 squareRow3"></div>
+      <div (click)="squareClick(4, 3)" [ngClass]= "getSquareVisited(gameModel, 4, 3)" class="square squareColumn4 squareRow3"></div>
+      <div (click)="squareClick(5, 3)" [ngClass]= "getSquareVisited(gameModel, 5, 3)" class="square squareColumn5 squareRow3"></div>
+      <div (click)="squareClick(0, 4)" [ngClass]= "getSquareVisited(gameModel, 0, 3)" class="square squareColumn0 squareRow4"></div>
+      <div (click)="squareClick(1, 4)" [ngClass]= "getSquareVisited(gameModel, 1, 4)" class="square squareColumn1 squareRow4"></div>
+      <div (click)="squareClick(2, 4)" [ngClass]= "getSquareVisited(gameModel, 2, 4)" class="square squareColumn2 squareRow4"></div>
+      <div (click)="squareClick(3, 4)" [ngClass]= "getSquareVisited(gameModel, 3, 4)" class="square squareColumn3 squareRow4"></div>
+      <div (click)="squareClick(4, 4)" [ngClass]= "getSquareVisited(gameModel, 4, 4)" class="square squareColumn4 squareRow4"></div>
+      <div (click)="squareClick(5, 4)" [ngClass]= "getSquareVisited(gameModel, 5, 4)" class="square squareColumn5 squareRow4"></div>
+      <div (click)="squareClick(0, 5)" [ngClass]= "getSquareVisited(gameModel, 0, 5)" class="square squareColumn0 squareRow5"></div>
+      <div (click)="squareClick(1, 5)" [ngClass]= "getSquareVisited(gameModel, 1, 5)" class="square squareColumn1 squareRow5"></div>
+      <div (click)="squareClick(2, 5)" [ngClass]= "getSquareVisited(gameModel, 2, 5)" class="square squareColumn2 squareRow5"></div>
+      <div (click)="squareClick(3, 5)" [ngClass]= "getSquareVisited(gameModel, 3, 5)" class="square squareColumn3 squareRow5"></div>
+      <div (click)="squareClick(4, 5)" [ngClass]= "getSquareVisited(gameModel, 4, 5)" class="square squareColumn4 squareRow5"></div>
+      <div (click)="squareClick(5, 5)" [ngClass]= "getSquareVisited(gameModel, 5, 5)" class="square squareColumn5 squareRow5"></div>
       <div (click)="edgeClick(Orientation.Vertical, 1, 0)" class="edge edgeVertical edgeColumn1 edgeRow0" [ngClass]="gameModel.verticalEdges[1][0]"></div>
       <div (click)="edgeClick(Orientation.Vertical, 2, 0)" class="edge edgeVertical edgeColumn2 edgeRow0" [ngClass]="gameModel.verticalEdges[2][0]"></div>
       <div (click)="edgeClick(Orientation.Vertical, 3, 0)" class="edge edgeVertical edgeColumn3 edgeRow0" [ngClass]="gameModel.verticalEdges[3][0]"></div>
