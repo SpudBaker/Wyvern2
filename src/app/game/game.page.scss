@@ -82,6 +82,12 @@
 .edgeWall{
   background-color: black;
 }
+.edgeVisitedWall{
+  background-color: black;
+}
+.edgeVisitedNoWall{
+  background-color: lightgrey;
+}
 .edgeHorizontal{
   width: 15%;
   padding-bottom: 2%; /* = width for a square aspect ratio */

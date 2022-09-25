@@ -62,5 +62,33 @@ export class GamePage {
       }
     }
 
+    getTranslatedEdgeState(gameModel: Globals.GameModel, horizontal: boolean, h: number, v: number): string {
+      let modelEdgeState: Globals.EdgeState;
+      if (horizontal){
+        modelEdgeState = gameModel.horizontalEdges[h][v];
+      } else {
+        modelEdgeState = gameModel.verticalEdges[h][v];
+      }
+      if(horizontal == false){
+        console.log('vertical : ' + modelEdgeState);
+        console.log(h + ':' + v);
+      }
+      let retval: string;
+      switch (modelEdgeState){
+        case Globals.EdgeState.Opening:
+        case Globals.EdgeState.Unknown:
+        case Globals.EdgeState.Wall:
+          retval = Globals.EdgeState.Unknown;
+          break;
+      default:
+        retval = modelEdgeState; 
+        break;
+      }
+      if (horizontal == false){
+        console.log('retval : ' + retval);
+      }
+      return retval;
+    }
+
 
   }

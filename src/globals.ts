@@ -8,6 +8,8 @@ export enum EdgeState {
     Border = 'edgeBorder',
     Opening = 'edgeOpening',
     Unknown = 'edgeUnknown',
+    visitedNoWall = 'edgeVisitedNoWall',
+    visitedWall = 'edgeVisitedWall',
     Wall = 'edgeWall'
   }
   
