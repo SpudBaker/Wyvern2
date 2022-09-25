@@ -31,26 +31,30 @@ export class GamePage {
     )}
 
     getCornerState(gameModel: Globals.GameModel, h: number, v:number): string {
-      try{
-        if(gameModel.horizontalEdges[h][v] === Globals.EdgeState.Wall) { 
+        if(gameModel.horizontalEdges[h][v] === Globals.EdgeState.visitedWall) { 
           return Globals.EdgeState.Border
         } 
-      } catch {}
-      try{
-        if(gameModel.horizontalEdges[h-1][v] === Globals.EdgeState.Wall) { 
+        if(gameModel.horizontalEdges[h-1][v] === Globals.EdgeState.visitedWall) { 
           return Globals.EdgeState.Border
         }
-      } catch {}
-      try{
-        if(gameModel.verticalEdges[h][v] === Globals.EdgeState.Wall) { 
+        if(gameModel.verticalEdges[h][v] === Globals.EdgeState.visitedWall) { 
           return Globals.EdgeState.Border
         }
-      } catch {}
-      try{
-        if(gameModel.verticalEdges[h][v-1] === Globals.EdgeState.Wall) { 
+        if(gameModel.verticalEdges[h][v-1] === Globals.EdgeState.visitedWall) { 
           return Globals.EdgeState.Border
         }
-      } catch {}
+        if(gameModel.horizontalEdges[h][v] === Globals.EdgeState.visitedNoWall) { 
+          return Globals.EdgeState.visitedNoWall
+        } 
+        if(gameModel.horizontalEdges[h-1][v] === Globals.EdgeState.visitedNoWall) { 
+          return Globals.EdgeState.visitedNoWall
+        }
+        if(gameModel.verticalEdges[h][v] === Globals.EdgeState.visitedNoWall) { 
+          return Globals.EdgeState.visitedNoWall
+        }
+        if(gameModel.verticalEdges[h][v-1] === Globals.EdgeState.visitedNoWall) { 
+          return Globals.EdgeState.visitedNoWall
+        }
       return Globals.EdgeState.Unknown;
     }
 
@@ -69,10 +73,6 @@ export class GamePage {
       } else {
         modelEdgeState = gameModel.verticalEdges[h][v];
       }
-      if(horizontal == false){
-        console.log('vertical : ' + modelEdgeState);
-        console.log(h + ':' + v);
-      }
       let retval: string;
       switch (modelEdgeState){
         case Globals.EdgeState.Opening:
@@ -83,9 +83,6 @@ export class GamePage {
       default:
         retval = modelEdgeState; 
         break;
-      }
-      if (horizontal == false){
-        console.log('retval : ' + retval);
       }
       return retval;
     }
