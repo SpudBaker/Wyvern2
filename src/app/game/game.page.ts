@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Component, NgZone } from '@angular/core';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as Globals from '../../globals';
 import { AuthService } from '../services/auth';
@@ -13,19 +12,22 @@ import { GameService } from '../services/game';
 })
 export class GamePage {
 
+  game: Globals.Game;
   gameModel$: Observable< Globals.GameModel>;
+  squareClickedPending = false;
 
-  constructor(private authService: AuthService, private gameService: GameService, private router: Router) {
+  constructor(private authService: AuthService, private gameService: GameService, private zone: NgZone) {
     this.gameModel$ = this.gameService.getCurrentGameObservable()
     .pipe(
       map(game => {
+        console.log('observing update');
+        this.game = game;
         let retVal; 
         if(game.player1 == this.authService.getUserEmail()){
           retVal = game.player1Board;
         } else {
           retVal = game.player2Board;
         }
-        console.log(retVal);
         return retVal;
       })
     )}
@@ -85,6 +87,57 @@ export class GamePage {
         break;
       }
       return retval;
+    }
+
+    squareClick(gm: Globals.GameModel, h: number, v: number): void{
+      if(this.squareClickedPending){return}
+      const gameModel = this.gameService.cloneGameModel(gm);
+      const deltah = h - gameModel.marker.horizontal;
+      const deltav = v - gameModel.marker.vertical;
+      const absh = Math.abs(deltah);
+      const absv = Math.abs(deltav);
+      if((absh > 1) || (absv > 1)) { return;}
+      if((absh == 0) && (absv == 0)) { return;}
+      if (!((absh == 0) || (absv == 0))) { return;}
+      this.squareClickedPending = true;
+      if (deltav == 1){
+        if(gameModel.horizontalEdges[h][v] == Globals.EdgeState.Wall || gameModel.horizontalEdges[h][v] == Globals.EdgeState.visitedWall){
+          gameModel.horizontalEdges[h][v] = Globals.EdgeState.visitedWall;
+        } else {
+          gameModel.marker.horizontal = h;
+          gameModel.marker.vertical = v;
+        }
+      } 
+      if (deltav == -1){
+        if(gameModel.horizontalEdges[h][v+1] == Globals.EdgeState.Wall || gameModel.horizontalEdges[h][v+1] == Globals.EdgeState.visitedWall){
+          gameModel.horizontalEdges[h][v+1] = Globals.EdgeState.visitedWall;
+        } else {
+          gameModel.marker.horizontal = h;
+          gameModel.marker.vertical = v;
+        }
+      } 
+      if (deltah == 1){
+        if(gameModel.verticalEdges[h][v] == Globals.EdgeState.Wall || gameModel.verticalEdges[h][v] == Globals.EdgeState.visitedWall){
+          gameModel.verticalEdges[h][v] = Globals.EdgeState.visitedWall;
+        } else {
+          gameModel.marker.horizontal = h;
+          gameModel.marker.vertical = v;
+        }
+      }
+      if (deltah == -1){
+        if(gameModel.verticalEdges[h+1][v] == Globals.EdgeState.Wall || gameModel.verticalEdges[h+1][v] == Globals.EdgeState.visitedWall){
+          gameModel.verticalEdges[h+1][v] = Globals.EdgeState.visitedWall;
+        } else {
+          gameModel.marker.horizontal = h;
+          gameModel.marker.vertical = v;
+        }
+      } 
+      this.gameService.pushGameModelToFirebase(this.game, gameModel)
+      .then(() => this.squareClickedPending = false)
+      .catch(err => {
+        console.log(err);
+        this.squareClickedPending = false;
+      })
     }
 
 

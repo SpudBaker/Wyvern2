@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { addDoc, collection, doc, docSnapshots, DocumentData, DocumentReference, DocumentSnapshot, getDoc, getDocs, getFirestore, query, runTransaction, where } from '@angular/fire/firestore';
+import { addDoc, collection, doc, docSnapshots, DocumentData, DocumentReference, getDoc, getDocs, getFirestore, query, runTransaction, where } from '@angular/fire/firestore';
 import * as Globals from '../,,/../../globals';
 import { AuthService } from '../services/auth';
 import { Observable } from 'rxjs';
@@ -13,6 +13,38 @@ export class GameService{
     public gameInPlay: Globals.Game;
 
     constructor(private authService: AuthService, private router: Router){}
+
+    public cloneGameModel(gm: Globals.GameModel): Globals.GameModel {
+      const newGM = new Globals.GameModel();
+      newGM.horizontalEdges = new Array<Globals.EdgeState[]>();
+      gm.horizontalEdges.forEach(item => {
+        const newArray = new Array<Globals.EdgeState>();
+        item.forEach(item2 => {
+          newArray.push(item2);
+        });
+        newGM.horizontalEdges.push(newArray);
+      });
+      newGM.marker = {...gm.marker};
+      newGM.squares = new Array<Globals.SquareState[]>();
+      gm.squares.forEach(item => {
+        const newArray = new Array<Globals.SquareState>();
+        item.forEach(item2 => {
+          newArray.push(item2);
+        });
+        newGM.squares.push(newArray);
+      });
+      newGM.target = {...gm.target};
+      newGM.validRouteExists = gm.validRouteExists;
+      newGM.verticalEdges = new Array<Globals.EdgeState[]>();
+      gm.verticalEdges.forEach(item => {
+        const newArray = new Array<Globals.EdgeState>();
+        item.forEach(item2 => {
+          newArray.push(item2);
+        });
+        newGM.verticalEdges.push(newArray);
+      });
+      return newGM;
+    }
 
     public async continue(gameModel: Globals.GameModel): Promise<void> {
         const gamesCollection = collection(getFirestore(), "games");
@@ -94,4 +126,16 @@ export class GameService{
     public navigateHome(): void {
       this.router.navigate(['home']);
     }
+
+    public async pushGameModelToFirebase(game: Globals.Game, gameModel: Globals.GameModel): Promise<any> {
+      const docRef = doc(getFirestore(), "games", game.id) as DocumentReference;
+      await runTransaction(getFirestore(), async transaction => {
+        if(this.authService.getUserEmail() == game.player1){
+          transaction.update(docRef, { player1Board: JSON.stringify(gameModel)});
+        } else {
+          transaction.update(docRef, { player2Board: JSON.stringify(gameModel)});
+        }
+    });
+  }
+  
 }
