@@ -20,7 +20,6 @@ export class GamePage {
     this.gameModel$ = this.gameService.getCurrentGameObservable()
     .pipe(
       map(game => {
-        console.log('observing update');
         this.game = game;
         let retVal; 
         if(game.player1 == this.authService.getUserEmail()){
@@ -61,7 +60,7 @@ export class GamePage {
     }
 
     getSquareVisited(gameModel: Globals.GameModel, h: number, v:number): string {
-      if (gameModel.squares[h][v] === Globals.SquareState.Visited) {
+      if (gameModel.squares[h][v] == Globals.SquareState.Visited) {
         return 'squareVisited';
       } else {
         return 'squareUnvisited';
@@ -106,6 +105,7 @@ export class GamePage {
         } else {
           gameModel.marker.horizontal = h;
           gameModel.marker.vertical = v;
+          gameModel.squares[h][v] = Globals.SquareState.Visited;
         }
       } 
       if (deltav == -1){
@@ -114,6 +114,7 @@ export class GamePage {
         } else {
           gameModel.marker.horizontal = h;
           gameModel.marker.vertical = v;
+          gameModel.squares[h][v] = Globals.SquareState.Visited;
         }
       } 
       if (deltah == 1){
@@ -122,6 +123,7 @@ export class GamePage {
         } else {
           gameModel.marker.horizontal = h;
           gameModel.marker.vertical = v;
+          gameModel.squares[h][v] = Globals.SquareState.Visited;
         }
       }
       if (deltah == -1){
@@ -130,6 +132,7 @@ export class GamePage {
         } else {
           gameModel.marker.horizontal = h;
           gameModel.marker.vertical = v;
+          gameModel.squares[h][v] = Globals.SquareState.Visited;
         }
       } 
       this.gameService.pushGameModelToFirebase(this.game, gameModel)

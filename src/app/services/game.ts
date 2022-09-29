@@ -26,13 +26,13 @@ export class GameService{
       });
       newGM.marker = {...gm.marker};
       newGM.squares = new Array<Globals.SquareState[]>();
-      gm.squares.forEach(item => {
+      for (let item of gm.squares){
         const newArray = new Array<Globals.SquareState>();
-        item.forEach(item2 => {
+        for(let item2 of item){
           newArray.push(item2);
-        });
+        };
         newGM.squares.push(newArray);
-      });
+      };
       newGM.target = {...gm.target};
       newGM.validRouteExists = gm.validRouteExists;
       newGM.verticalEdges = new Array<Globals.EdgeState[]>();
