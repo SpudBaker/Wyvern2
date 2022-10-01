@@ -13,7 +13,7 @@
 <ion-content>
   <div class="divOuterLeft" *ngIf="gameModel$ | async as gameModel">
       <div (click)="squareClick(gameModel, 0, 0)" class="square squareVisited squareColumn0 squareRow0"></div>
-      <div (click)="squareClick(gameModel, 1, 0)" [ngClass]= "getSquareVisited(gameModel, 1, 0)" class="square  squareColumn1 squareRow0"></div>
+      <div (click)="squareClick(gameModel, 1, 0)" [ngClass]= "getSquareVisited(gameModel, 1, 0)" class="square squareColumn1 squareRow0"></div>
       <div (click)="squareClick(gameModel, 2, 0)" [ngClass]= "getSquareVisited(gameModel, 2, 0)" class="square squareColumn2 squareRow0"></div>
       <div (click)="squareClick(gameModel, 3, 0)" [ngClass]= "getSquareVisited(gameModel, 3, 0)" class="square squareColumn3 squareRow0"></div>
       <div (click)="squareClick(gameModel, 4, 0)" [ngClass]= "getSquareVisited(gameModel, 4, 0)" class="square squareColumn4 squareRow0"></div>

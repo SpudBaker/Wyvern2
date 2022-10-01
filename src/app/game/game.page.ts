@@ -44,18 +44,6 @@ export class GamePage {
         if(gameModel.verticalEdges[h][v-1] === Globals.EdgeState.visitedWall) { 
           return Globals.EdgeState.Border
         }
-        if(gameModel.horizontalEdges[h][v] === Globals.EdgeState.visitedNoWall) { 
-          return Globals.EdgeState.visitedNoWall
-        } 
-        if(gameModel.horizontalEdges[h-1][v] === Globals.EdgeState.visitedNoWall) { 
-          return Globals.EdgeState.visitedNoWall
-        }
-        if(gameModel.verticalEdges[h][v] === Globals.EdgeState.visitedNoWall) { 
-          return Globals.EdgeState.visitedNoWall
-        }
-        if(gameModel.verticalEdges[h][v-1] === Globals.EdgeState.visitedNoWall) { 
-          return Globals.EdgeState.visitedNoWall
-        }
       return Globals.EdgeState.Unknown;
     }
 
@@ -106,6 +94,7 @@ export class GamePage {
           gameModel.marker.horizontal = h;
           gameModel.marker.vertical = v;
           gameModel.squares[h][v] = Globals.SquareState.Visited;
+          gameModel.horizontalEdges[h][v] = Globals.EdgeState.visitedNoWall;
         }
       } 
       if (deltav == -1){
@@ -115,6 +104,7 @@ export class GamePage {
           gameModel.marker.horizontal = h;
           gameModel.marker.vertical = v;
           gameModel.squares[h][v] = Globals.SquareState.Visited;
+          gameModel.horizontalEdges[h][v+1] = Globals.EdgeState.visitedNoWall;
         }
       } 
       if (deltah == 1){
@@ -124,6 +114,7 @@ export class GamePage {
           gameModel.marker.horizontal = h;
           gameModel.marker.vertical = v;
           gameModel.squares[h][v] = Globals.SquareState.Visited;
+          gameModel.verticalEdges[h][v] = Globals.EdgeState.visitedNoWall;
         }
       }
       if (deltah == -1){
@@ -133,6 +124,7 @@ export class GamePage {
           gameModel.marker.horizontal = h;
           gameModel.marker.vertical = v;
           gameModel.squares[h][v] = Globals.SquareState.Visited;
+          gameModel.verticalEdges[h+1][v] = Globals.EdgeState.visitedNoWall;
         }
       } 
       this.gameService.pushGameModelToFirebase(this.game, gameModel)
