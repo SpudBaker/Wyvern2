@@ -63,6 +63,7 @@ export class GameModel {
     [SquareState.Unknown, SquareState.Unknown, SquareState.Unknown, SquareState.Unknown, SquareState.Unknown, SquareState.Unknown], 
   ];
   target = new Piece(5, 5);
+  turns = 0;
   validRouteExists: boolean = true;
   verticalEdges: EdgeState[][] = [
     [EdgeState.Border, EdgeState.Border, EdgeState.Border, EdgeState.Border, EdgeState.Border, EdgeState.Border, EdgeState.Border],

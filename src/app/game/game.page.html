@@ -159,7 +159,154 @@
       <div class="corner edgeColumn5 edgeRow5" [ngClass]="getCornerState(gameModel,5,5)"></div>
       <div class="marker" [ngClass]="'pieceColumn' + gameModel.marker.horizontal + ' pieceRow' + gameModel.marker.vertical"></div>
   </div>
-  <div class="divOuterRight">
+  <div class="divOuterRight" *ngIf="opponentGameModel$ | async as opponentGameModel">
+    <div class="square squareVisited squareColumn0 squareRow0"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 1, 0)" class="square squareColumn1 squareRow0"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 2, 0)" class="square squareColumn2 squareRow0"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 3, 0)" class="square squareColumn3 squareRow0"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 4, 0)" class="square squareColumn4 squareRow0"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 5, 0)" class="square squareColumn5 squareRow0"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 0, 1)" class="square squareColumn0 squareRow1"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 1, 1)" class="square squareColumn1 squareRow1"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 2, 1)" class="square squareColumn2 squareRow1"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 3, 1)" class="square squareColumn3 squareRow1"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 4, 1)" class="square squareColumn4 squareRow1"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 5, 1)" class="square squareColumn5 squareRow1"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 0, 2)" class="square squareColumn0 squareRow2"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 1, 2)" class="square squareColumn1 squareRow2"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 2, 2)" class="square squareColumn2 squareRow2"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 3, 2)" class="square squareColumn3 squareRow2"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 4, 2)" class="square squareColumn4 squareRow2"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 5, 2)" class="square squareColumn5 squareRow2"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 0, 3)" class="square squareColumn0 squareRow3"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 1, 3)" class="square squareColumn1 squareRow3"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 2, 3)" class="square squareColumn2 squareRow3"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 3, 3)" class="square squareColumn3 squareRow3"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 4, 3)" class="square squareColumn4 squareRow3"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 5, 3)" class="square squareColumn5 squareRow3"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 0, 4)" class="square squareColumn0 squareRow4"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 1, 4)" class="square squareColumn1 squareRow4"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 2, 4)" class="square squareColumn2 squareRow4"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 3, 4)" class="square squareColumn3 squareRow4"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 4, 4)" class="square squareColumn4 squareRow4"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 5, 4)" class="square squareColumn5 squareRow4"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 0, 5)" class="square squareColumn0 squareRow5"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 1, 5)" class="square squareColumn1 squareRow5"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 2, 5)" class="square squareColumn2 squareRow5"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 3, 5)" class="square squareColumn3 squareRow5"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 4, 5)" class="square squareColumn4 squareRow5"></div>
+    <div [ngClass]= "getSquareVisited(opponentGameModel, 5, 5)" class="square squareColumn5 squareRow5"></div>
+    <div class="edge edgeVertical edgeColumn1 edgeRow0" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 1, 0)"></div>
+    <div class="edge edgeVertical edgeColumn2 edgeRow0" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 2, 0)"></div>
+    <div class="edge edgeVertical edgeColumn3 edgeRow0" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 3, 0)"></div>
+    <div class="edge edgeVertical edgeColumn4 edgeRow0" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 4, 0)"></div>
+    <div class="edge edgeVertical edgeColumn5 edgeRow0" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 5, 0)"></div>
+    <div class="edge edgeVertical edgeColumn1 edgeRow1" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 1, 1)"></div>
+    <div class="edge edgeVertical edgeColumn2 edgeRow1" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 2, 1)"></div>
+    <div class="edge edgeVertical edgeColumn3 edgeRow1" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 3, 1)"></div>
+    <div class="edge edgeVertical edgeColumn4 edgeRow1" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 4, 1)"></div>
+    <div class="edge edgeVertical edgeColumn5 edgeRow1" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 5, 1)"></div>
+    <div class="edge edgeVertical edgeColumn1 edgeRow2" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 1, 2)"></div>
+    <div class="edge edgeVertical edgeColumn2 edgeRow2" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 2, 2)"></div>
+    <div class="edge edgeVertical edgeColumn3 edgeRow2" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 3, 2)"></div>
+    <div class="edge edgeVertical edgeColumn4 edgeRow2" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 4, 2)"></div>
+    <div class="edge edgeVertical edgeColumn5 edgeRow2" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 5, 2)"></div>
+    <div class="edge edgeVertical edgeColumn1 edgeRow3" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 1, 3)"></div>
+    <div class="edge edgeVertical edgeColumn2 edgeRow3" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 2, 3)"></div>
+    <div class="edge edgeVertical edgeColumn3 edgeRow3" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 3, 3)"></div>
+    <div class="edge edgeVertical edgeColumn4 edgeRow3" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 4, 3)"></div>
+    <div class="edge edgeVertical edgeColumn5 edgeRow3" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 5, 3)"></div>
+    <div class="edge edgeVertical edgeColumn1 edgeRow4" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 1, 4)"></div>
+    <div class="edge edgeVertical edgeColumn2 edgeRow4" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 2, 4)"></div>
+    <div class="edge edgeVertical edgeColumn3 edgeRow4" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 3, 4)"></div>
+    <div class="edge edgeVertical edgeColumn4 edgeRow4" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 4, 4)"></div>
+    <div class="edge edgeVertical edgeColumn5 edgeRow4" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 5, 4)"></div>
+    <div class="edge edgeVertical edgeColumn1 edgeRow5" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 1, 5)"></div>
+    <div class="edge edgeVertical edgeColumn2 edgeRow5" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 2, 5)"></div>
+    <div class="edge edgeVertical edgeColumn3 edgeRow5" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 3, 5)"></div>
+    <div class="edge edgeVertical edgeColumn4 edgeRow5" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 4, 5)"></div>
+    <div class="edge edgeVertical edgeColumn5 edgeRow5" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, false, 5, 5)"></div>
+    <div class="edge edgeHorizontal edgeColumn0 edgeRow1" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 0, 1)"></div>
+    <div class="edge edgeHorizontal edgeColumn1 edgeRow1" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 1, 1)"></div>
+    <div class="edge edgeHorizontal edgeColumn2 edgeRow1" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 2, 1)"></div>
+    <div class="edge edgeHorizontal edgeColumn3 edgeRow1" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 3, 1)"></div>
+    <div class="edge edgeHorizontal edgeColumn4 edgeRow1" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 4, 1)"></div>
+    <div class="edge edgeHorizontal edgeColumn5 edgeRow1" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 5, 1)"></div>
+    <div class="edge edgeHorizontal edgeColumn0 edgeRow2" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 0, 2)"></div>
+    <div class="edge edgeHorizontal edgeColumn1 edgeRow2" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 1, 2)"></div>
+    <div class="edge edgeHorizontal edgeColumn2 edgeRow2" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 2, 2)"></div>
+    <div class="edge edgeHorizontal edgeColumn3 edgeRow2" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 3, 2)"></div>
+    <div class="edge edgeHorizontal edgeColumn4 edgeRow2" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 4, 2)"></div>
+    <div class="edge edgeHorizontal edgeColumn5 edgeRow2" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 5, 2)"></div>
+    <div class="edge edgeHorizontal edgeColumn0 edgeRow3" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 0, 3)"></div>
+    <div class="edge edgeHorizontal edgeColumn1 edgeRow3" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 1, 3)"></div>
+    <div class="edge edgeHorizontal edgeColumn2 edgeRow3" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 2, 3)"></div>
+    <div class="edge edgeHorizontal edgeColumn3 edgeRow3" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 3, 3)"></div>
+    <div class="edge edgeHorizontal edgeColumn4 edgeRow3" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 4, 3)"></div>
+    <div class="edge edgeHorizontal edgeColumn5 edgeRow3" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 5, 3)"></div>
+    <div class="edge edgeHorizontal edgeColumn0 edgeRow4" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 0, 4)"></div>
+    <div class="edge edgeHorizontal edgeColumn1 edgeRow4" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 1, 4)"></div>
+    <div class="edge edgeHorizontal edgeColumn2 edgeRow4" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 2, 4)"></div>
+    <div class="edge edgeHorizontal edgeColumn3 edgeRow4" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 3, 4)"></div>
+    <div class="edge edgeHorizontal edgeColumn4 edgeRow4" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 4, 4)"></div>
+    <div class="edge edgeHorizontal edgeColumn5 edgeRow4" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 5, 4)"></div>
+    <div class="edge edgeHorizontal edgeColumn0 edgeRow5" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 0, 5)"></div>
+    <div class="edge edgeHorizontal edgeColumn1 edgeRow5" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 1, 5)"></div>
+    <div class="edge edgeHorizontal edgeColumn2 edgeRow5" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 2, 5)"></div>
+    <div class="edge edgeHorizontal edgeColumn3 edgeRow5" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 3, 5)"></div>
+    <div class="edge edgeHorizontal edgeColumn4 edgeRow5" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 4, 5)"></div>
+    <div class="edge edgeHorizontal edgeColumn5 edgeRow5" [ngClass]="getOpponentTranslatedEdgeState(opponentGameModel, true, 5, 5)"></div>
+    <div class="edge edgeBorderHorizontal edgeColumn0 edgeRow0" [ngClass]="opponentGameModel.horizontalEdges[0][0]"></div>
+    <div class="edge edgeBorderHorizontal edgeColumn1 edgeRow0" [ngClass]="opponentGameModel.horizontalEdges[1][0]"></div>
+    <div class="edge edgeBorderHorizontal edgeColumn2 edgeRow0" [ngClass]="opponentGameModel.horizontalEdges[2][0]"></div>
+    <div class="edge edgeBorderHorizontal edgeColumn3 edgeRow0" [ngClass]="opponentGameModel.horizontalEdges[3][0]"></div>
+    <div class="edge edgeBorderHorizontal edgeColumn4 edgeRow0" [ngClass]="opponentGameModel.horizontalEdges[4][0]"></div>
+    <div class="edge edgeBorderHorizontal edgeColumn5 edgeRow0" [ngClass]="opponentGameModel.horizontalEdges[5][0]"></div>
+    <div class="edge edgeBorderHorizontal edgeColumn0 edgeRow6" [ngClass]="opponentGameModel.horizontalEdges[0][6]"></div>
+    <div class="edge edgeBorderHorizontal edgeColumn1 edgeRow6" [ngClass]="opponentGameModel.horizontalEdges[1][6]"></div>
+    <div class="edge edgeBorderHorizontal edgeColumn2 edgeRow6" [ngClass]="opponentGameModel.horizontalEdges[2][6]"></div>
+    <div class="edge edgeBorderHorizontal edgeColumn3 edgeRow6" [ngClass]="opponentGameModel.horizontalEdges[3][6]"></div>
+    <div class="edge edgeBorderHorizontal edgeColumn4 edgeRow6" [ngClass]="opponentGameModel.horizontalEdges[4][6]"></div>
+    <div class="edge edgeBorderHorizontal edgeColumn5 edgeRow6" [ngClass]="opponentGameModel.horizontalEdges[5][6]"></div>
+    <div class="edge edgeBorderVertical edgeColumn0 edgeRow0" [ngClass]="opponentGameModel.verticalEdges[0][0]"></div>
+    <div class="edge edgeBorderVertical edgeColumn6 edgeRow0" [ngClass]="opponentGameModel.verticalEdges[6][0]"></div>
+    <div class="edge edgeBorderVertical edgeColumn0 edgeRow1" [ngClass]="opponentGameModel.verticalEdges[0][1]"></div>
+    <div class="edge edgeBorderVertical edgeColumn6 edgeRow1" [ngClass]="opponentGameModel.verticalEdges[6][1]"></div>
+    <div class="edge edgeBorderVertical edgeColumn0 edgeRow2" [ngClass]="opponentGameModel.verticalEdges[0][2]"></div>
+    <div class="edge edgeBorderVertical edgeColumn6 edgeRow2" [ngClass]="opponentGameModel.verticalEdges[6][2]"></div>
+    <div class="edge edgeBorderVertical edgeColumn0 edgeRow3" [ngClass]="opponentGameModel.verticalEdges[0][3]"></div>
+    <div class="edge edgeBorderVertical edgeColumn6 edgeRow3" [ngClass]="opponentGameModel.verticalEdges[6][3]"></div>
+    <div class="edge edgeBorderVertical edgeColumn0 edgeRow4" [ngClass]="opponentGameModel.verticalEdges[0][4]"></div>
+    <div class="edge edgeBorderVertical edgeColumn6 edgeRow4" [ngClass]="opponentGameModel.verticalEdges[6][4]"></div>
+    <div class="edge edgeBorderVertical edgeColumn0 edgeRow5" [ngClass]="opponentGameModel.verticalEdges[0][5]"></div>
+    <div class="edge edgeBorderVertical edgeColumn6 edgeRow5" [ngClass]="opponentGameModel.verticalEdges[6][5]"></div>
+    <div class="corner edgeColumn1 edgeRow1" [ngClass]="getOpponentCornerState(opponentGameModel,1,1)"></div>
+    <div class="corner edgeColumn2 edgeRow1" [ngClass]="getOpponentCornerState(opponentGameModel,2,1)"></div>
+    <div class="corner edgeColumn3 edgeRow1" [ngClass]="getOpponentCornerState(opponentGameModel,3,1)"></div>
+    <div class="corner edgeColumn4 edgeRow1" [ngClass]="getOpponentCornerState(opponentGameModel,4,1)"></div>
+    <div class="corner edgeColumn5 edgeRow1" [ngClass]="getOpponentCornerState(opponentGameModel,5,1)"></div>
+    <div class="corner edgeColumn1 edgeRow2" [ngClass]="getOpponentCornerState(opponentGameModel,1,2)"></div>
+    <div class="corner edgeColumn2 edgeRow2" [ngClass]="getOpponentCornerState(opponentGameModel,2,2)"></div>
+    <div class="corner edgeColumn3 edgeRow2" [ngClass]="getOpponentCornerState(opponentGameModel,3,2)"></div>
+    <div class="corner edgeColumn4 edgeRow2" [ngClass]="getOpponentCornerState(opponentGameModel,4,2)"></div>
+    <div class="corner edgeColumn5 edgeRow2" [ngClass]="getOpponentCornerState(opponentGameModel,5,2)"></div>
+    <div class="corner edgeColumn1 edgeRow3" [ngClass]="getOpponentCornerState(opponentGameModel,1,3)"></div>
+    <div class="corner edgeColumn2 edgeRow3" [ngClass]="getOpponentCornerState(opponentGameModel,2,3)"></div>
+    <div class="corner edgeColumn3 edgeRow3" [ngClass]="getOpponentCornerState(opponentGameModel,3,3)"></div>
+    <div class="corner edgeColumn4 edgeRow3" [ngClass]="getOpponentCornerState(opponentGameModel,4,3)"></div>
+    <div class="corner edgeColumn5 edgeRow3" [ngClass]="getOpponentCornerState(opponentGameModel,5,3)"></div>
+    <div class="corner edgeColumn1 edgeRow4" [ngClass]="getOpponentCornerState(opponentGameModel,1,4)"></div>
+    <div class="corner edgeColumn2 edgeRow4" [ngClass]="getOpponentCornerState(opponentGameModel,2,4)"></div>
+    <div class="corner edgeColumn3 edgeRow4" [ngClass]="getOpponentCornerState(opponentGameModel,3,4)"></div>
+    <div class="corner edgeColumn4 edgeRow4" [ngClass]="getOpponentCornerState(opponentGameModel,4,4)"></div>
+    <div class="corner edgeColumn5 edgeRow4" [ngClass]="getOpponentCornerState(opponentGameModel,5,4)"></div>
+    <div class="corner edgeColumn1 edgeRow5" [ngClass]="getOpponentCornerState(opponentGameModel,1,5)"></div>
+    <div class="corner edgeColumn2 edgeRow5" [ngClass]="getOpponentCornerState(opponentGameModel,2,5)"></div>
+    <div class="corner edgeColumn3 edgeRow5" [ngClass]="getOpponentCornerState(opponentGameModel,3,5)"></div>
+    <div class="corner edgeColumn4 edgeRow5" [ngClass]="getOpponentCornerState(opponentGameModel,4,5)"></div>
+    <div class="corner edgeColumn5 edgeRow5" [ngClass]="getOpponentCornerState(opponentGameModel,5,5)"></div>
+    <div class="marker" [ngClass]="'pieceColumn' + opponentGameModel.marker.horizontal + ' pieceRow' + opponentGameModel.marker.vertical"></div>
+    <div class="target" [ngClass]="'pieceColumn' + opponentGameModel.target.horizontal + ' pieceRow' + opponentGameModel.target.vertical"></div>
   </div>
 </ion-content>
 
