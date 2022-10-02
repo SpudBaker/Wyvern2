@@ -128,13 +128,18 @@ export class GameService{
       this.router.navigate(['home']);
     }
 
-    public async pushGameModelToFirebase(game: Globals.Game, gameModel: Globals.GameModel): Promise<any> {
+    public async pushGameModelToFirebase(game: Globals.Game, gameModel: Globals.GameModel, finished: boolean): Promise<any> {
       const docRef = doc(getFirestore(), "games", game.id) as DocumentReference;
       await runTransaction(getFirestore(), async transaction => {
-        if(this.authService.getUserEmail() == game.player1){
-          transaction.update(docRef, { player1Board: JSON.stringify(gameModel)});
-        } else {
-          transaction.update(docRef, { player2Board: JSON.stringify(gameModel)});
+        if((await getDoc(docRef)).data().gameState != Globals.GameState.FINISHED){
+          if(this.authService.getUserEmail() == game.player1){
+            transaction.update(docRef, { player2Board: JSON.stringify(gameModel)});
+          } else {
+            transaction.update(docRef, { player1Board: JSON.stringify(gameModel)});
+          }
+          if (finished) {
+            transaction.update(docRef, { gameState: Globals.GameState.FINISHED});
+          }
         }
     });
   }

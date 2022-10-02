@@ -46,19 +46,29 @@ export class GamePage {
   }
 
   populateTurnText(game: Globals.Game): string {
-    if (game.player1 == this.authService.getUserEmail()){
-      if(game.player1Board.turns > game.player2Board?.turns){
-        return "Waiting opponent ...";
+    if(game.gameState == Globals.GameState.FINISHED){
+      const player1Text = (this.authService.getUserEmail() == game?.player1) ? 'you win!' : 'they win!';
+      const player2Text = (this.authService.getUserEmail() == game?.player2) ? 'you win!' : 'they win!';
+      if((game.player1Board.target.horizontal == game.player1Board.marker.horizontal) &&
+          (game.player1Board.target.vertical == game.player1Board.marker.vertical)){
+        return player2Text;
+      } else {
+        return player1Text;
       }
-      if(game.player1Board.turns <= game.player2Board?.turns){
-        return "You can play";
+    }
+    if (game.player1 == this.authService.getUserEmail()){
+      if(game.player2Board?.turns > game.player1Board?.turns){
+        return 'Waiting opponent ...';
+      }
+      if(game.player2Board?.turns <= game.player1Board?.turns){
+        return 'You can play';
       }
     } else {
-      if(game.player2Board.turns > game.player1Board?.turns){
-        return "Waiting opponent ...";
+      if(game.player1Board?.turns > game.player2Board?.turns){
+        return 'Waiting opponent ...';
       }
-      if(game.player2Board.turns <= game.player1Board?.turns){
-        return "You can play";
+      if(game.player1Board?.turns <= game.player2Board?.turns){
+        return 'You can play';
       }
     }
 
@@ -155,11 +165,12 @@ export class GamePage {
     }
 
     squareClick(gm: Globals.GameModel, h: number, v: number): void{
+      let finished : boolean;
       if(this.squareClickedPending){return}
       if(this.game.player1 == this.authService.getUserEmail()){
-        if(this.game.player1Board.turns > this.game.player2Board.turns){return}
-      } else {
         if(this.game.player2Board.turns > this.game.player1Board.turns){return}
+      } else {
+        if(this.game.player1Board.turns > this.game.player2Board.turns){return}
       }
       const gameModel = this.gameService.cloneGameModel(gm);
       const deltah = h - gameModel.marker.horizontal;
@@ -214,7 +225,10 @@ export class GamePage {
           gameModel.verticalEdges[h+1][v] = Globals.EdgeState.visitedNoWall;
         }
       } 
-      this.gameService.pushGameModelToFirebase(this.game, gameModel)
+      if ((gameModel.marker.horizontal == gameModel.target.horizontal) && (gameModel.marker.vertical == gameModel.target.vertical)){
+        finished = true;
+      }
+      this.gameService.pushGameModelToFirebase(this.game, gameModel, finished )
       .then(() => this.squareClickedPending = false)
       .catch(err => {
         console.log(err);
