@@ -13,6 +13,7 @@ import { GameService } from '../services/game';
 export class GamePage {
 
   private game: Globals.Game;
+  public turnText: string = undefined;
   public gameModel$: Observable< Globals.GameModel>;
   public opponentGameModel$: Observable< Globals.GameModel>;
   private squareClickedPending = false;
@@ -21,11 +22,12 @@ export class GamePage {
     this.gameModel$ = this.gameService.getCurrentGameObservable().pipe(
       map(game => {
         this.game = game;
+        this.turnText = this.populateTurnText(game);
         let retVal; 
         if(game.player1 == this.authService.getUserEmail()){
-          retVal = game.player1Board;
-        } else {
           retVal = game.player2Board;
+        } else {
+          retVal = game.player1Board;
         }
         return retVal;
       })
@@ -34,14 +36,32 @@ export class GamePage {
       map(game => {
         let retVal; 
         if(game.player1 == this.authService.getUserEmail()){
-          retVal = game.player2Board;
-        } else {
           retVal = game.player1Board;
+        } else {
+          retVal = game.player2Board;
         }
         return retVal;
       })
     );
-  
+  }
+
+  populateTurnText(game: Globals.Game): string {
+    if (game.player1 == this.authService.getUserEmail()){
+      if(game.player1Board.turns > game.player2Board?.turns){
+        return "Waiting opponent ...";
+      }
+      if(game.player1Board.turns <= game.player2Board?.turns){
+        return "You can play";
+      }
+    } else {
+      if(game.player2Board.turns > game.player1Board?.turns){
+        return "Waiting opponent ...";
+      }
+      if(game.player2Board.turns <= game.player1Board?.turns){
+        return "You can play";
+      }
+    }
+
   }
 
     getCornerState(gameModel: Globals.GameModel, h: number, v:number): string {
@@ -136,6 +156,11 @@ export class GamePage {
 
     squareClick(gm: Globals.GameModel, h: number, v: number): void{
       if(this.squareClickedPending){return}
+      if(this.game.player1 == this.authService.getUserEmail()){
+        if(this.game.player1Board.turns > this.game.player2Board.turns){return}
+      } else {
+        if(this.game.player2Board.turns > this.game.player1Board.turns){return}
+      }
       const gameModel = this.gameService.cloneGameModel(gm);
       const deltah = h - gameModel.marker.horizontal;
       const deltav = v - gameModel.marker.vertical;
@@ -148,6 +173,7 @@ export class GamePage {
       if (deltav == 1){
         if(gameModel.horizontalEdges[h][v] == Globals.EdgeState.Wall || gameModel.horizontalEdges[h][v] == Globals.EdgeState.visitedWall){
           gameModel.horizontalEdges[h][v] = Globals.EdgeState.visitedWall;
+          gameModel.turns = gameModel.turns + 1;
         } else {
           gameModel.marker.horizontal = h;
           gameModel.marker.vertical = v;
@@ -158,6 +184,7 @@ export class GamePage {
       if (deltav == -1){
         if(gameModel.horizontalEdges[h][v+1] == Globals.EdgeState.Wall || gameModel.horizontalEdges[h][v+1] == Globals.EdgeState.visitedWall){
           gameModel.horizontalEdges[h][v+1] = Globals.EdgeState.visitedWall;
+          gameModel.turns = gameModel.turns + 1;
         } else {
           gameModel.marker.horizontal = h;
           gameModel.marker.vertical = v;
@@ -168,6 +195,7 @@ export class GamePage {
       if (deltah == 1){
         if(gameModel.verticalEdges[h][v] == Globals.EdgeState.Wall || gameModel.verticalEdges[h][v] == Globals.EdgeState.visitedWall){
           gameModel.verticalEdges[h][v] = Globals.EdgeState.visitedWall;
+          gameModel.turns = gameModel.turns + 1;
         } else {
           gameModel.marker.horizontal = h;
           gameModel.marker.vertical = v;
@@ -178,6 +206,7 @@ export class GamePage {
       if (deltah == -1){
         if(gameModel.verticalEdges[h+1][v] == Globals.EdgeState.Wall || gameModel.verticalEdges[h+1][v] == Globals.EdgeState.visitedWall){
           gameModel.verticalEdges[h+1][v] = Globals.EdgeState.visitedWall;
+          gameModel.turns = gameModel.turns + 1;
         } else {
           gameModel.marker.horizontal = h;
           gameModel.marker.vertical = v;

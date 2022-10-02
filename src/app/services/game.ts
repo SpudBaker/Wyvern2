@@ -34,6 +34,7 @@ export class GameService{
         newGM.squares.push(newArray);
       };
       newGM.target = {...gm.target};
+      newGM.turns = gm.turns;
       newGM.validRouteExists = gm.validRouteExists;
       newGM.verticalEdges = new Array<Globals.EdgeState[]>();
       gm.verticalEdges.forEach(item => {
