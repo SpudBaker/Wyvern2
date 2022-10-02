@@ -18,7 +18,7 @@ export class GamePage {
   public opponentGameModel$: Observable< Globals.GameModel>;
   private squareClickedPending = false;
 
-  constructor(private authService: AuthService, private gameService: GameService) {
+  constructor(private authService: AuthService, public gameService: GameService) {
     this.gameModel$ = this.gameService.getCurrentGameObservable().pipe(
       map(game => {
         this.game = game;

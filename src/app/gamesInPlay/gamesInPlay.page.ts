@@ -13,7 +13,7 @@ export class GamesInPlayPage {
 
   public games: Globals.Game[];
 
-  constructor(private authService: AuthService, private gameService: GameService, private router: Router) {
+  constructor(public authService: AuthService, public gameService: GameService, private router: Router) {
     this.gameService.getIncompleteGames()
     .then(games => {
       this.games = games;

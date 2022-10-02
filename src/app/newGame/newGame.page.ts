@@ -14,7 +14,7 @@ export class NewGamePage {
   public Orientation = Globals.Orientation;
   public creatingGame = false;
 
-  constructor(private gameService: GameService, private router: Router) {
+  constructor(public gameService: GameService, private router: Router) {
   }
 
   edgeClick(orientation: Globals.Orientation, h:number, v: number){
