@@ -27,7 +27,14 @@
         <ion-row>
           <ion-col size="4"></ion-col>
           <ion-col>
-            <ion-button [disabled]="incompleteGames.length == 0" (click)="viewGamesButtonPress()" expand="block" color="primary">Games In Play({{incompleteGames.length}})</ion-button>
+            <ion-button [disabled]="incompleteGames.length == 0" (click)="viewGamesButtonPress()" expand="block" color="primary">In Play({{incompleteGames.length}})</ion-button>
+          </ion-col>
+          <ion-col size="4"></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4"></ion-col>
+          <ion-col>
+            <ion-button (click)="stats()" expand="block" color="primary">Stats</ion-button>
           </ion-col>
           <ion-col size="4"></ion-col>
         </ion-row>

@@ -1,0 +1,15 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Stats
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="usersArr$ | async as userArr">
+    <div *ngFor="let user of userArr">
+      {{user}}
+    </div>
+  </div>
+</ion-content>

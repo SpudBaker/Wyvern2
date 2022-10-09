@@ -54,4 +54,8 @@ export class HomePage {
     this.router.navigate(['gamesInPlay']);
   }
 
+  public stats(){
+    this.router.navigate(['stats']);
+  }
+
 }

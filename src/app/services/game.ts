@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { addDoc, collection, doc, docSnapshots, DocumentData, DocumentReference, getDoc, getDocs, getFirestore, query, runTransaction, where } from '@angular/fire/firestore';
+import { addDoc, collection, collectionData, doc, docSnapshots, DocumentData, DocumentReference, Firestore, getDoc, getDocs, getFirestore, query, runTransaction, where } from '@angular/fire/firestore';
 import * as Globals from '../,,/../../globals';
 import { AuthService } from '../services/auth';
 import { Observable } from 'rxjs';
@@ -12,7 +12,7 @@ export class GameService{
 
     public gameInPlay: Globals.Game;
 
-    constructor(private authService: AuthService, private router: Router){}
+    constructor(private authService: AuthService, private firestore: Firestore, private router: Router){}
 
     public cloneGameModel(gm: Globals.GameModel): Globals.GameModel {
       const newGM = new Globals.GameModel();
@@ -48,9 +48,9 @@ export class GameService{
     }
 
     public async continue(gameModel: Globals.GameModel): Promise<void> {
-        const gamesCollection = collection(getFirestore(), "games");
+        const gamesCollection = collection(this.firestore, "games");
         let matchedDoc: DocumentReference;
-        const q = query(collection(getFirestore(), "games"), where("gameState", "==", Globals.GameState.WAITING_FOR_PLAYERS));
+        const q = query(collection(this.firestore, "games"), where("gameState", "==", Globals.GameState.WAITING_FOR_PLAYERS));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach(doc => {
           if (doc.get('player1') != this.authService.getUserEmail()){
@@ -67,7 +67,7 @@ export class GameService{
           const doc = await getDoc(dref);
           this.gameInPlay = this.convertDocTGameObject(doc);
         } else {
-          await runTransaction(getFirestore(), async transaction => {
+          await runTransaction(this.firestore, async transaction => {
             const sfDoc = await transaction.get(matchedDoc);
             if (sfDoc.get('gameState')===Globals.GameState.WAITING_FOR_PLAYERS) {
                 transaction.update(matchedDoc, { player2: this.authService.getUserEmail() });
@@ -99,7 +99,7 @@ export class GameService{
     }
 
     public getCurrentGameObservable(): Observable<Globals.Game>{
-      const docRef = doc(getFirestore(), "games", this.gameInPlay.id) as DocumentReference;
+      const docRef = doc(this.firestore, "games", this.gameInPlay.id) as DocumentReference;
       return docSnapshots(docRef).pipe(
         map(docRef => this.convertDocTGameObject(docRef))
       );
@@ -107,13 +107,13 @@ export class GameService{
     
     public async getIncompleteGames(): Promise<Globals.Game[]> {
       let games = new Array<Globals.Game>;
-      const qPlayer1 = query(collection(getFirestore(), "games"), where("gameState", "in", 
+      const qPlayer1 = query(collection(this.firestore, "games"), where("gameState", "in", 
           [Globals.GameState.WAITING_FOR_PLAYERS, Globals.GameState.IN_PROGRESS]), where("player1", "==", this.authService.getUserEmail()));
       const queryPlayer1Snapshot = await getDocs(qPlayer1);
       queryPlayer1Snapshot.forEach(d =>
           games.push(this.convertDocTGameObject(d))
       );
-      const qPlayer2 = query(collection(getFirestore(), "games"), where("gameState", "in", 
+      const qPlayer2 = query(collection(this.firestore, "games"), where("gameState", "in", 
           [Globals.GameState.WAITING_FOR_PLAYERS, Globals.GameState.IN_PROGRESS]), where("player2", "==", this.authService.getUserEmail()));
       const queryPlayer2Snapshot = await getDocs(qPlayer2);
       queryPlayer2Snapshot.forEach(d => {
@@ -124,13 +124,24 @@ export class GameService{
       return games;
     }
 
+    public getUsers(): Observable<string[]>{
+      const usercol = collection(this.firestore, 'users');
+      return collectionData(usercol).pipe(
+        map(arr => {
+          const retArr = new Array<string>();
+          arr.forEach(doc => {retArr.push(doc.email)});
+          return retArr;
+        })
+      )
+    }
+
     public navigateHome(): void {
       this.router.navigate(['home']);
     }
 
     public async pushGameModelToFirebase(game: Globals.Game, gameModel: Globals.GameModel, finished: boolean): Promise<any> {
-      const docRef = doc(getFirestore(), "games", game.id) as DocumentReference;
-      await runTransaction(getFirestore(), async transaction => {
+      const docRef = doc(this.firestore, "games", game.id) as DocumentReference;
+      await runTransaction(this.firestore, async transaction => {
         if((await getDoc(docRef)).data().gameState != Globals.GameState.FINISHED){
           if(this.authService.getUserEmail() == game.player1){
             transaction.update(docRef, { player2Board: JSON.stringify(gameModel)});

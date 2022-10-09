@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
 import { User } from '@angular/fire/auth';
 import { AuthService } from '../services/auth';
 import { catchError, first, map } from 'rxjs/operators';
@@ -21,7 +21,7 @@ export class LoginPage {
 
   private register(){
     this.loginErrMessage = null;
-    this.authService.createUserWithEmailAndPassword(this.inputEmail, this.inputPassword)
+    from(this.authService.createUserWithEmailAndPassword(this.inputEmail, this.inputPassword))
     .pipe(
       first(),
       catchError(err => {
@@ -71,7 +71,7 @@ export class LoginPage {
       this.loginErrMessage = 'Enter both email and password';
       return;
     }
-    this.authService.signIn(this.inputEmail, this.inputPassword)
+    from(this.authService.signIn(this.inputEmail, this.inputPassword))
     .pipe(
       first(),
       catchError(err => {

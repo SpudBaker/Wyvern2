@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, 
     signOut, user, User, UserCredential } from '@angular/fire/auth';
+import { addDoc, collection, collectionData, doc, docSnapshots, DocumentData, DocumentReference, Firestore, getDoc, getDocs, getFirestore, query, runTransaction, Transaction, where } from '@angular/fire/firestore';
+
 import { EMPTY, from, Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -11,12 +13,20 @@ export class AuthService{
 
     private userEmail: string;
 
-    constructor(private auth: Auth, private router: Router){
+    constructor(private auth: Auth, private firestore: Firestore, private router: Router){
         this.getLoginStatus().subscribe();
     }
 
-    public createUserWithEmailAndPassword(email: string, password: string): Observable<UserCredential>{
-        return from(createUserWithEmailAndPassword(this.auth, email, password));
+    public createUserWithEmailAndPassword(email: string, password: string): Promise<any>{
+        return createUserWithEmailAndPassword(this.auth, email, password).then(async () => {
+            const q = query(collection(this.firestore, "users"), where("email", "==", email));
+            const querySnapshot = await getDocs(q);
+            if(querySnapshot.empty){
+                const usersCollection = collection(this.firestore, "users");
+                addDoc(usersCollection, {email});
+            } else {
+            }
+        })
     }
 
     public getAuth(): Auth {
@@ -47,8 +57,8 @@ export class AuthService{
         return from (sendPasswordResetEmail(this.auth, email))
     }
 
-    public signIn(email: string, password: string): Observable<UserCredential>{
-        return from(signInWithEmailAndPassword(this.auth, email, password))  
+    public async signIn(email: string, password: string): Promise<any>{
+        return signInWithEmailAndPassword(this.auth, email, password)
     }
 
     public signOut(){
