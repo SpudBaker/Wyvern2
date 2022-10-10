@@ -51,10 +51,10 @@ export class GamePage {
         const a : AlertOptions = {
 
         };
-        if(!this.alerted){
+        if(!this.alerted && game.player1 && game.player2){
           return this.alertController.create(
             { header: 'GAME ON!',
-              subHeader: 'Opponent is ....',
+              subHeader: 'Your Opponent is ....',
               message: (game.player1 == this.authService.getUserEmail()) ? game.player2 : game.player1
             }
           )

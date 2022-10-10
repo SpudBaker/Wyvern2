@@ -20,12 +20,18 @@ export class HomePage {
   public inputPassword: string;
 
   constructor(private authService: AuthService, private gameService: GameService, private router: Router) {
+    console.log('================home page constructor=============');
+  }
+
+  ionViewDidEnter (){
+    console.log('================home page ionViewDidEnter=============');
     this.login$ = this.authService.getLoginStatus().pipe(
       map(data => {
         this.populateIncompleteGames();
         return data;
       })
     );
+
   }
 
   private populateIncompleteGames(){
