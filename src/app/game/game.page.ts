@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { AlertController, AlertOptions } from '@ionic/angular';
+import { EMPTY, Observable, Subscription } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import * as Globals from '../../globals';
 import { AuthService } from '../services/auth';
 import { GameService } from '../services/game';
@@ -12,13 +13,15 @@ import { GameService } from '../services/game';
 })
 export class GamePage {
 
+  private alertSubscription: Subscription;
+  private alerted = false;
   private game: Globals.Game;
   public turnText: string = undefined;
   public gameModel$: Observable< Globals.GameModel>;
   public opponentGameModel$: Observable< Globals.GameModel>;
   private squareClickedPending = false;
 
-  constructor(private authService: AuthService, public gameService: GameService) {
+  constructor(private alertController: AlertController, private authService: AuthService, public gameService: GameService) {
     this.gameModel$ = this.gameService.getCurrentGameObservable().pipe(
       map(game => {
         this.game = game;
@@ -43,6 +46,26 @@ export class GamePage {
         return retVal;
       })
     );
+    this.alertSubscription = this.gameService.getCurrentGameObservable().pipe(
+      switchMap(game => {
+        const a : AlertOptions = {
+
+        };
+        if(!this.alerted){
+          return this.alertController.create(
+            { header: 'GAME ON!',
+              subHeader: 'Opponent is ....',
+              message: (game.player1 == this.authService.getUserEmail()) ? game.player2 : game.player1
+            }
+          )
+        } else {
+          return EMPTY;
+        }
+      }),
+      switchMap(a => {
+        if(a){return a.present()} else {return EMPTY}
+      })
+    ).subscribe();
   }
 
   populateTurnText(game: Globals.Game): string {
@@ -109,6 +132,7 @@ export class GamePage {
       }
     return Globals.EdgeState.Unknown;
   }
+
 
     getSquareVisited(gameModel: Globals.GameModel, h: number, v:number): string {
       if (gameModel.squares[h][v] == Globals.SquareState.Visited) {
