@@ -52,6 +52,7 @@ export class GamePage {
 
         };
         if(!this.alerted && game.player1 && game.player2){
+          this.alerted = true;
           return this.alertController.create(
             { header: 'GAME ON!',
               subHeader: 'Your Opponent is ....',
