@@ -13,6 +13,7 @@ import * as Globals from '../../globals';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  private firstTime = true;
   public incompleteGames = new Array<Globals.Game>;
   public login$: Observable<User>;
   public loginErrMessage: string;
@@ -21,20 +22,23 @@ export class HomePage {
 
   constructor(private authService: AuthService, private gameService: GameService, private router: Router) {
     console.log('================home page constructor=============');
-  }
-
-  ionViewDidEnter (){
-    console.log('================home page ionViewDidEnter=============');
     this.login$ = this.authService.getLoginStatus().pipe(
       map(data => {
         this.populateIncompleteGames();
         return data;
       })
     );
+  }
 
+  ionViewDidEnter (){
+    console.log('================home page ionViewDidEnter=============');
+    if(!this.firstTime){
+      this.populateIncompleteGames();
+    }
   }
 
   private populateIncompleteGames(){
+    this.firstTime = false;
     this.gameService.getIncompleteGames().then(data => {
       this.incompleteGames = data;
     });
