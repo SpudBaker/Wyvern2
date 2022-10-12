@@ -21,7 +21,6 @@ export class HomePage {
   public inputPassword: string;
 
   constructor(private authService: AuthService, private gameService: GameService, private router: Router) {
-    console.log('================home page constructor=============');
     this.login$ = this.authService.getLoginStatus().pipe(
       map(data => {
         this.populateIncompleteGames();
@@ -31,7 +30,6 @@ export class HomePage {
   }
 
   ionViewDidEnter (){
-    console.log('================home page ionViewDidEnter=============');
     if(!this.firstTime){
       this.populateIncompleteGames();
     }

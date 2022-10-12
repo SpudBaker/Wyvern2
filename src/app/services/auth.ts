@@ -38,7 +38,6 @@ export class AuthService{
             switchMap(data => {
                 if(data){
                     this.userEmail = data.email;
-                    this.router.navigate(['home']);
                     return of(data); 
                 } else {
                     this.userEmail = null;
