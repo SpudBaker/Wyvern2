@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 
 export class AuthService{
 
+    private loggedIn: boolean;
     private userEmail: string;
 
     constructor(private auth: Auth, private firestore: Firestore, private router: Router){
@@ -38,9 +39,14 @@ export class AuthService{
             switchMap(data => {
                 if(data){
                     this.userEmail = data.email;
+                    if(!this.loggedIn){
+                        this.router.navigate(['home']);
+                        this.loggedIn = true;
+                    }
                     return of(data); 
                 } else {
                     this.userEmail = null;
+                    this.loggedIn = false;
                     this.router.navigate(['login']);
                     return EMPTY;
                 }

@@ -50,7 +50,7 @@ export class GameService{
     public async continue(gameModel: Globals.GameModel): Promise<void> {
         const gamesCollection = collection(this.firestore, "games");
         let matchedDoc: DocumentReference;
-        const q = query(collection(this.firestore, "games"), where("gameState", "==", Globals.GameState.WAITING_FOR_PLAYERS));
+        const q = query(gamesCollection, where("gameState", "==", Globals.GameState.WAITING_FOR_PLAYERS));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach(doc => {
           if (doc.get('player1') != this.authService.getUserEmail()){
