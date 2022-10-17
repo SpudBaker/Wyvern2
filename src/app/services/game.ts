@@ -106,25 +106,33 @@ export class GameService{
     }
     
     public async getIncompleteGames(): Promise<Globals.Game[]> {
-      console.log('==================game service - getIncompleteGames()==========');
       let games = new Array<Globals.Game>;
       const qPlayer1 = query(collection(this.firestore, "games"), where("gameState", "in", 
           [Globals.GameState.WAITING_FOR_PLAYERS, Globals.GameState.IN_PROGRESS]), where("player1", "==", this.authService.getUserEmail()));
       const queryPlayer1Snapshot = await getDocs(qPlayer1);
-      console.log('query1snapshot count' + queryPlayer1Snapshot.size);
       queryPlayer1Snapshot.forEach(d =>
-          games.push(this.convertDocTGameObject(d))
+        games.push(this.convertDocTGameObject(d))
       );
       const qPlayer2 = query(collection(this.firestore, "games"), where("gameState", "in", 
           [Globals.GameState.WAITING_FOR_PLAYERS, Globals.GameState.IN_PROGRESS]), where("player2", "==", this.authService.getUserEmail()));
       const queryPlayer2Snapshot = await getDocs(qPlayer2);
-      console.log('query2snapshot count' + queryPlayer2Snapshot.size);
       queryPlayer2Snapshot.forEach(d => {
-              games.push(this.convertDocTGameObject(d));
-      }
-              
-      )
+        games.push(this.convertDocTGameObject(d));
+      })
       return games;
+    }
+
+    public async getOpponent(email: string): Promise<any>{
+      const colRef = collection(this.firestore, 'users');
+      const q = query(colRef, where('email', '==', email));
+      const docSnapshots = await getDocs(q);
+      if(docSnapshots.size == 1){
+        let retVal;
+        docSnapshots.forEach(snap => retVal = snap.data());
+        return retVal;
+      } else {
+        throw new Error('wrong number of opponent users');
+      }
     }
 
     public getUsers(): Observable<string[]>{

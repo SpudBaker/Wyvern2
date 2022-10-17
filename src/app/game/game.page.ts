@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { AlertController, AlertOptions } from '@ionic/angular';
-import { EMPTY, Observable, Subscription } from 'rxjs';
+import { AlertController } from '@ionic/angular';
+import { EMPTY, from, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import * as Globals from '../../globals';
 import { AuthService } from '../services/auth';
@@ -13,7 +13,6 @@ import { GameService } from '../services/game';
 })
 export class GamePage {
 
-  private alertSubscription: Subscription;
   private alerted = false;
   private game: Globals.Game;
   public turnText: string = undefined;
@@ -46,25 +45,27 @@ export class GamePage {
         return retVal;
       })
     );
-    this.alertSubscription = this.gameService.getCurrentGameObservable().pipe(
+    this.gameService.getCurrentGameObservable().pipe(
       switchMap(game => {
-        const a : AlertOptions = {
-
-        };
-        if(!this.alerted && game.player1 && game.player2){
-          this.alerted = true;
-          return this.alertController.create(
-            { header: 'GAME ON!',
-              subHeader: 'Your Opponent is ....',
-              message: (game.player1 == this.authService.getUserEmail()) ? game.player2 : game.player1
+        const opponentEmail = (game.player1 == this.authService.getUserEmail()) ? game.player2 : game.player1;
+        return from(this.gameService.getOpponent(opponentEmail)).pipe(
+          switchMap(opponent => {
+            console.log(opponent);
+            if(!this.alerted && game.player1 && game.player2){
+              this.alerted = true;
+              return this.alertController.create(
+                { header: 'GAME ON!',
+                  subHeader: 'Your Opponent is ....',
+                  message: opponent.email + ' (' + opponent.score + ')'
+                }
+              )
+            } else {
+              return EMPTY;
             }
-          )
-        } else {
-          return EMPTY;
-        }
+          }))
       }),
       switchMap(a => {
-        if(a){return a.present()} else {return EMPTY}
+            if(a){return a.present()} else {return EMPTY}
       })
     ).subscribe();
   }

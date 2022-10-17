@@ -24,7 +24,7 @@ export class AuthService{
             const querySnapshot = await getDocs(q);
             if(querySnapshot.empty){
                 const usersCollection = collection(this.firestore, "users");
-                addDoc(usersCollection, {email});
+                addDoc(usersCollection, {email, score: 100});
             } else {
             }
         })
