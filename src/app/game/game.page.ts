@@ -23,15 +23,17 @@ export class GamePage {
   constructor(private alertController: AlertController, private authService: AuthService, public gameService: GameService) {
     this.gameModel$ = this.gameService.getCurrentGameObservable().pipe(
       map(game => {
-        this.game = game;
-        this.turnText = this.populateTurnText(game);
         let retVal; 
-        if(game.player1 == this.authService.getUserEmail()){
-          retVal = game.player2Board;
-        } else {
-          retVal = game.player1Board;
+        if(game){
+          this.game = game;
+          this.turnText = this.populateTurnText(game);
+          if(game.player1 == this.authService.getUserEmail()){
+            retVal = game.player2Board;
+          } else {
+            retVal = game.player1Board;
+          }
         }
-        return retVal;
+      return retVal;
       })
     );
     this.opponentGameModel$ = this.gameService.getCurrentGameObservable().pipe(
@@ -50,8 +52,6 @@ export class GamePage {
         const opponentEmail = (game.player1 == this.authService.getUserEmail()) ? game.player2 : game.player1;
         return from(this.gameService.getOpponent(opponentEmail)).pipe(
           switchMap(opponent => {
-            console.log('======getCurrentGameObservable ==  getOpponent===============');
-            console.log(opponent);
             if(!this.alerted && game.player1 && game.player2){
               this.alerted = true;
               return this.alertController.create(

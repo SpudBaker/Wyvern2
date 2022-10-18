@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { addDoc, collection, collectionData, doc, docSnapshots, DocumentData, DocumentReference, Firestore, getDoc, getDocs, getFirestore, query, runTransaction, where } from '@angular/fire/firestore';
 import * as Globals from '../,,/../../globals';
 import { AuthService } from '../services/auth';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
@@ -99,6 +99,7 @@ export class GameService{
     }
 
     public getCurrentGameObservable(): Observable<Globals.Game>{
+      if(!this.gameInPlay){return EMPTY}
       const docRef = doc(this.firestore, "games", this.gameInPlay.id) as DocumentReference;
       return docSnapshots(docRef).pipe(
         map(docRef => this.convertDocTGameObject(docRef))
