@@ -123,6 +123,7 @@ export class GameService{
     }
 
     public async getOpponent(email: string): Promise<any>{
+      if(!email){return undefined};
       const colRef = collection(this.firestore, 'users');
       const q = query(colRef, where('email', '==', email));
       const docSnapshots = await getDocs(q);

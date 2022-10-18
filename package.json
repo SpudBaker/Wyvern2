@@ -5,6 +5,7 @@
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
+    "emulators": "firebase emulators:start",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",

@@ -50,6 +50,7 @@ export class GamePage {
         const opponentEmail = (game.player1 == this.authService.getUserEmail()) ? game.player2 : game.player1;
         return from(this.gameService.getOpponent(opponentEmail)).pipe(
           switchMap(opponent => {
+            console.log('======getCurrentGameObservable ==  getOpponent===============');
             console.log(opponent);
             if(!this.alerted && game.player1 && game.player2){
               this.alerted = true;
