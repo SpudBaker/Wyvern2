@@ -78,5 +78,6 @@ export class GameModel {
 
 export class User {
   email: string;
+  id: string;
   score: number;
 }

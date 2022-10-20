@@ -129,8 +129,12 @@ export class GameService{
       const q = query(colRef, where('email', '==', email));
       const docSnapshots = await getDocs(q);
       if(docSnapshots.size == 1){
-        let retVal;
-        docSnapshots.forEach(snap => retVal = snap.data() as Globals.User);
+        let retVal: Globals.User;
+        docSnapshots.forEach(snap => {
+          retVal = snap.data() as Globals.User;
+          retVal.id = snap.id;
+          
+        });
         return retVal;
       } else {
         throw new Error('wrong number of opponent users');
