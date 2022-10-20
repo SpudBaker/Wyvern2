@@ -1,0 +1,47 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title align="center">
+      GAME ON !!
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <br/>
+  <br/>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="1">
+      </ion-col>
+      <ion-col size="10" align="center">
+        You are playing :
+      </ion-col>
+      <ion-col size="1">
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="1">
+      </ion-col>
+      <ion-col size="10" align="center">
+        <h2>{{getOpponentEmail()}}</h2>
+      </ion-col>
+      <ion-col size="1">
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="1">
+      </ion-col>
+      <ion-col size="10" align="center">
+        Rating : {{getOpponentScore()}}
+      </ion-col>
+      <ion-col size="1">
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <br/>
+  <br/>
+  <div align="center">
+    <ion-button (click)="close()">Close</ion-button>
+  </div>
+</ion-content>
+

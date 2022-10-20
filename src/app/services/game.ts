@@ -123,14 +123,14 @@ export class GameService{
       return games;
     }
 
-    public async getOpponent(email: string): Promise<any>{
+    public async getOpponent(email: string): Promise<Globals.User>{
       if(!email){return undefined};
       const colRef = collection(this.firestore, 'users');
       const q = query(colRef, where('email', '==', email));
       const docSnapshots = await getDocs(q);
       if(docSnapshots.size == 1){
         let retVal;
-        docSnapshots.forEach(snap => retVal = snap.data());
+        docSnapshots.forEach(snap => retVal = snap.data() as Globals.User);
         return retVal;
       } else {
         throw new Error('wrong number of opponent users');

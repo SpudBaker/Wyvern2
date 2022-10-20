@@ -75,3 +75,8 @@ export class GameModel {
     [EdgeState.Border, EdgeState.Border, EdgeState.Border, EdgeState.Border, EdgeState.Border, EdgeState.Border, EdgeState.Border]
   ]
 }
+
+export class User {
+  email: string;
+  score: number;
+}

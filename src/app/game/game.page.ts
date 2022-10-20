@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { EMPTY, from, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import * as Globals from '../../globals';
 import { AuthService } from '../services/auth';
 import { GameService } from '../services/game';
+import { ModalComponent } from './modalComponent/modal.component';
 
 @Component({
   selector: 'app-game',
@@ -20,7 +21,8 @@ export class GamePage {
   public opponentGameModel$: Observable< Globals.GameModel>;
   private squareClickedPending = false;
 
-  constructor(private alertController: AlertController, private authService: AuthService, public gameService: GameService) {
+  constructor(private modalController: ModalController, private authService: AuthService, public gameService: GameService) {
+    console.log('==============================================game page constructor===============');
     this.gameModel$ = this.gameService.getCurrentGameObservable().pipe(
       map(game => {
         let retVal; 
@@ -54,10 +56,9 @@ export class GamePage {
           switchMap(opponent => {
             if(!this.alerted && game.player1 && game.player2){
               this.alerted = true;
-              return this.alertController.create(
-                { header: 'GAME ON!',
-                  subHeader: 'Your Opponent is ....',
-                  message: opponent.email + ' (' + opponent.score + ')'
+              return this.modalController.create({ 
+                component: ModalComponent,
+                componentProps: {opponent: opponent}
                 }
               )
             } else {
