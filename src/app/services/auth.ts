@@ -6,13 +6,14 @@ import { collection, doc, Firestore, getDocs, query, setDoc, where } from '@angu
 import { EMPTY, from, Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import * as Globals from'../../globals';
 
 @Injectable({providedIn: 'root'})
 
 export class AuthService{
 
     private loggedIn: boolean;
-    private userEmail: string;
+    private user: Globals.User;
 
     constructor(private auth: Auth, private firestore: Firestore, private router: Router){
         this.getLoginStatus().subscribe();
@@ -38,14 +39,16 @@ export class AuthService{
         return user(this.auth).pipe(
             switchMap(data => {
                 if(data){
-                    this.userEmail = data.email;
+                    this.user = new Globals.User();
+                    this.user.email = data.email;
+                    this.user.id = data.uid;
                     if(!this.loggedIn){
                         this.router.navigate(['home']);
                         this.loggedIn = true;
                     }
                     return of(data); 
                 } else {
-                    this.userEmail = null;
+                    this.user = undefined;
                     this.loggedIn = false;
                     this.router.navigate(['login']);
                     return EMPTY;
@@ -55,7 +58,11 @@ export class AuthService{
     }
 
     public getUserEmail(): string {
-        return this.userEmail;
+        return this.user.email;
+    }
+
+    public getUserId(): string {
+        return this.user.id;
     }
 
     public resetPassword(email: string): Observable<void>{

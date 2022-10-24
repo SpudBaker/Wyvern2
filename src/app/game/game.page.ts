@@ -22,14 +22,13 @@ export class GamePage {
   private squareClickedPending = false;
 
   constructor(private modalController: ModalController, private authService: AuthService, public gameService: GameService) {
-    console.log('==============================================game page constructor===============');
     this.gameModel$ = this.gameService.getCurrentGameObservable().pipe(
       map(game => {
         let retVal; 
         if(game){
           this.game = game;
           this.turnText = this.populateTurnText(game);
-          if(game.player1 == this.authService.getUserEmail()){
+          if(game.player1 == this.authService.getUserId()){
             retVal = game.player2Board;
           } else {
             retVal = game.player1Board;
@@ -41,7 +40,7 @@ export class GamePage {
     this.opponentGameModel$ = this.gameService.getCurrentGameObservable().pipe(
       map(game => {
         let retVal; 
-        if(game.player1 == this.authService.getUserEmail()){
+        if(game.player1 == this.authService.getUserId()){
           retVal = game.player1Board;
         } else {
           retVal = game.player2Board;
@@ -51,8 +50,8 @@ export class GamePage {
     );
     this.gameService.getCurrentGameObservable().pipe(
       switchMap(game => {
-        const opponentEmail = (game.player1 == this.authService.getUserEmail()) ? game.player2 : game.player1;
-        return from(this.gameService.getOpponent(opponentEmail)).pipe(
+        const opponentId = (game.player1 == this.authService.getUserId()) ? game.player2 : game.player1;
+        return from(this.gameService.getOpponent(opponentId)).pipe(
           switchMap(opponent => {
             if(!this.alerted && game.player1 && game.player2){
               this.alerted = true;
@@ -74,8 +73,8 @@ export class GamePage {
 
   populateTurnText(game: Globals.Game): string {
     if(game.gameState == Globals.GameState.FINISHED){
-      const player1Text = (this.authService.getUserEmail() == game?.player1) ? 'you win!' : 'they win!';
-      const player2Text = (this.authService.getUserEmail() == game?.player2) ? 'you win!' : 'they win!';
+      const player1Text = (this.authService.getUserId() == game?.player1) ? 'you win!' : 'they win!';
+      const player2Text = (this.authService.getUserId() == game?.player2) ? 'you win!' : 'they win!';
       if((game.player1Board.target.horizontal == game.player1Board.marker.horizontal) &&
           (game.player1Board.target.vertical == game.player1Board.marker.vertical)){
         return player2Text;
@@ -83,7 +82,7 @@ export class GamePage {
         return player1Text;
       }
     }
-    if (game.player1 == this.authService.getUserEmail()){
+    if (game.player1 == this.authService.getUserId()){
       if(game.player2Board?.turns > game.player1Board?.turns){
         return 'Waiting opponent ...';
       }
@@ -195,7 +194,7 @@ export class GamePage {
     squareClick(gm: Globals.GameModel, h: number, v: number): void{
       let finished : boolean;
       if(this.squareClickedPending){return}
-      if(this.game.player1 == this.authService.getUserEmail()){
+      if(this.game.player1 == this.authService.getUserId()){
         if(this.game.player2Board.turns > this.game.player1Board.turns){return}
       } else {
         if(this.game.player1Board.turns > this.game.player2Board.turns){return}
