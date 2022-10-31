@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
-  appName: 'Wyvern2',
+  appName: 'testDeploy',
   webDir: 'www',
   bundledWebRuntime: false
 };
