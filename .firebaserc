@@ -1,14 +1,5 @@
 {
   "projects": {
-    "default": "wyvern-42d25"
-  },
-  "targets": {
-    "wyvern-42d25": {
-      "hosting": {
-        "app": [
-          "wyvern-42d25"
-        ]
-      }
-    }
+    "default": "wyverngame-1d3e9"
   }
 }

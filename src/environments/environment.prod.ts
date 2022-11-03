@@ -1,13 +1,12 @@
 export const environment = {
   firebase: {
-    projectId: 'wyvern-42d25',
-    appId: '1:305743517898:web:87b87da8ce94065af6fc33',
-    storageBucket: 'wyvern-42d25.appspot.com',
-    locationId: 'europe-west',
-    apiKey: 'AIzaSyBf3kVMpg_AWY9vOwYUFkwUUxAKi96Oiko',
-    authDomain: 'wyvern-42d25.firebaseapp.com',
-    messagingSenderId: '305743517898',
-    measurementId: 'G-CKVVRLT8NG',
+    apiKey: "AIzaSyB-m1LI54hq97q2GBmnj7erwaQfKcPUoEI",
+    authDomain: "wyverngame-1d3e9.firebaseapp.com",
+    projectId: "wyverngame-1d3e9",
+    storageBucket: "wyverngame-1d3e9.appspot.com",
+    messagingSenderId: "148120569958",
+    appId: "1:148120569958:web:0198f47efca7a4cef845a7",
+    measurementId: "G-96L7NN00BS"
   },
   production: true
 };
