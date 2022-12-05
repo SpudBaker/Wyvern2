@@ -5,7 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { GamePage } from './game.page';
 
 import { NewGamePageRoutingModule } from './game-routing.module';
-import { ModalComponent } from './modalComponent/modal.component';
+import { GameStartModalComponent } from './modalComponents/gameStart/gameStartModal.component';
+import { GameFinishModalComponent } from './modalComponents/gameFinish/gameFinishModal.component';
 
 
 @NgModule({
@@ -15,6 +16,6 @@ import { ModalComponent } from './modalComponent/modal.component';
     IonicModule,
     NewGamePageRoutingModule
   ],
-  declarations: [GamePage, ModalComponent]
+  declarations: [GamePage, GameFinishModalComponent, GameStartModalComponent]
 })
 export class GamePageModule {}

@@ -5,7 +5,8 @@ import { map, switchMap } from 'rxjs/operators';
 import * as Globals from '../../globals';
 import { AuthService } from '../services/auth';
 import { GameService } from '../services/game';
-import { ModalComponent } from './modalComponent/modal.component';
+import { GameFinishModalComponent } from './modalComponents/gameFinish/gameFinishModal.component';
+import { GameStartModalComponent } from './modalComponents/gameStart/gameStartModal.component';
 
 @Component({
   selector: 'app-game',
@@ -22,65 +23,15 @@ export class GamePage {
   private squareClickedPending = false;
 
   constructor(private modalController: ModalController, private authService: AuthService, public gameService: GameService) {
-    this.gameModel$ = this.gameService.getCurrentGameObservable().pipe(
-      map(game => {
-        let retVal; 
-        if(game){
-          this.game = game;
-          this.turnText = this.populateTurnText(game);
-          if(game.player1 == this.authService.getUserId()){
-            retVal = game.player2Board;
-          } else {
-            retVal = game.player1Board;
-          }
-        }
-      return retVal;
-      })
-    );
-    this.opponentGameModel$ = this.gameService.getCurrentGameObservable().pipe(
-      map(game => {
-        let retVal; 
-        if(game.player1 == this.authService.getUserId()){
-          retVal = game.player1Board;
-        } else {
-          retVal = game.player2Board;
-        }
-        return retVal;
-      })
-    );
-    this.gameService.getCurrentGameObservable().pipe(
-      switchMap(game => {
-        const opponentId = (game.player1 == this.authService.getUserId()) ? game.player2 : game.player1;
-        return from(this.gameService.getOpponent(opponentId)).pipe(
-          switchMap(opponent => {
-            if(!this.alerted && game.player1 && game.player2){
-              this.alerted = true;
-              return this.modalController.create({ 
-                component: ModalComponent,
-                componentProps: {opponent: opponent}
-                }
-              )
-            } else {
-              return EMPTY;
-            }
-          }))
-      }),
-      switchMap(a => {
-            if(a){return a.present()} else {return EMPTY}
-      })
-    ).subscribe();
   }
 
   populateTurnText(game: Globals.Game): string {
     if(game.gameState == Globals.GameState.FINISHED){
-      const player1Text = (this.authService.getUserId() == game?.player1) ? 'you win!' : 'they win!';
-      const player2Text = (this.authService.getUserId() == game?.player2) ? 'you win!' : 'they win!';
-      if((game.player1Board.target.horizontal == game.player1Board.marker.horizontal) &&
-          (game.player1Board.target.vertical == game.player1Board.marker.vertical)){
-        return player2Text;
-      } else {
-        return player1Text;
-      }
+      this.modalController.create({ 
+        component: GameFinishModalComponent,
+        componentProps: {game}
+        }
+      ).then(a => a.present())
     }
     if (game.player1 == this.authService.getUserId()){
       if(game.player2Board?.turns > game.player1Board?.turns){
@@ -189,6 +140,56 @@ export class GamePage {
         break;
       }
       return retval;
+    }
+
+    ngOnInit(){
+      this.gameModel$ = this.gameService.getCurrentGameObservable().pipe(
+        map(game => {
+          let retVal; 
+          if(game){
+            this.game = game;
+            this.turnText = this.populateTurnText(game);
+            if(game.player1 == this.authService.getUserId()){
+              retVal = game.player2Board;
+            } else {
+              retVal = game.player1Board;
+            }
+          }
+        return retVal;
+        })
+      );
+      this.opponentGameModel$ = this.gameService.getCurrentGameObservable().pipe(
+        map(game => {
+          let retVal; 
+          if(game.player1 == this.authService.getUserId()){
+            retVal = game.player1Board;
+          } else {
+            retVal = game.player2Board;
+          }
+          return retVal;
+        })
+      );
+      this.gameService.getCurrentGameObservable().pipe(
+        switchMap(game => {
+          const opponentId = (game.player1 == this.authService.getUserId()) ? game.player2 : game.player1;
+          return from(this.gameService.getOpponent(opponentId)).pipe(
+            switchMap(opponent => {
+              if(!this.alerted && game.player1 && game.player2){
+                this.alerted = true;
+                return this.modalController.create({ 
+                  component: GameStartModalComponent,
+                  componentProps: {opponent: opponent}
+                  }
+                )
+              } else {
+                return EMPTY;
+              }
+            }))
+        }),
+        switchMap(a => {
+              if(a){return a.present()} else {return EMPTY}
+        })
+      ).subscribe();
     }
 
     squareClick(gm: Globals.GameModel, h: number, v: number): void{

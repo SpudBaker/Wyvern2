@@ -1,0 +1,75 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title align="center">
+      GAME FINISHED !!
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <br/>
+  <br/>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="1">
+      </ion-col>
+      <ion-col size="10" align="center">
+        <div *ngIf="pageInitiated">
+          Winner : {{winner.email}}
+        </div>
+      </ion-col>
+      <ion-col size="1">
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="1">
+      </ion-col>
+      <ion-col size="10" align="center">
+        <div *ngIf="pageInitiated">
+          New Score : {{winner.score + winnerChange}} (+ {{winnerChange}})
+        </div>
+      </ion-col>
+      <ion-col size="1">
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="1">
+      </ion-col>
+      <ion-col size="10" align="center">
+        <div *ngIf="pageInitiated">
+          <br/>
+        </div>
+      </ion-col>
+      <ion-col size="1">
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="1">
+      </ion-col>
+      <ion-col size="10" align="center">
+        <div *ngIf="pageInitiated">
+          Loser : {{loser.email}}
+        </div>
+      </ion-col>
+      <ion-col size="1">
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="1">
+      </ion-col>
+      <ion-col size="10" align="center">
+        <div *ngIf="pageInitiated">
+          New Score : {{loser.score + loserChange}} ({{loserChange}})
+        </div>
+      </ion-col>
+      <ion-col size="1">
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <br/>
+  <br/>
+  <div align="center">
+    <ion-button (click)="close()">Close</ion-button>
+  </div>
+</ion-content>
+

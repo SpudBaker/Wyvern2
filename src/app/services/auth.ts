@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, 
     signOut, user, User } from '@angular/fire/auth';
-import { collection, doc, Firestore, getDocs, query, setDoc, where } from '@angular/fire/firestore';
+import { collection, doc, docData, Firestore, getDocs, query, setDoc, updateDoc, where } from '@angular/fire/firestore';
 
 import { EMPTY, from, Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { first, map, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import * as Globals from'../../globals';
 
@@ -57,6 +57,19 @@ export class AuthService{
         );
     }
 
+    public getUserDatabaseRecordByID(id: string): Observable<Globals.User>{
+        return docData(doc(this.firestore, 'users/' + id)).pipe(
+          first(), 
+          map(doc => {
+            const user = new Globals.User();
+            user.email = doc.email;
+            user.id= id;
+            user.score = doc.score;
+            return user;
+          })
+        )
+    }
+
     public getUserEmail(): string {
         return this.user.email;
     }
@@ -75,6 +88,10 @@ export class AuthService{
 
     public signOut(){
         signOut(this.auth);
+    }
+ 
+    public updateUserScore(user: Globals.User, scoreChange: number): Promise<any>{
+        return updateDoc(doc(this.firestore, 'users/' + user.id), {score: user.score + scoreChange})
     }
 
 }

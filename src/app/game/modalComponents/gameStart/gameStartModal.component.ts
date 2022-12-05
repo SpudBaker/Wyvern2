@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import * as Globals from '../../../globals';
+import * as Globals from '../../../../globals';
 
 
 @Component({
-  selector: 'app-modal',
-  templateUrl: 'modal.component.html',
-  styleUrls: ['modal.component.scss'],
+  selector: 'game-start-modal',
+  templateUrl: 'gameStartModal.component.html',
+  styleUrls: ['gameStartModal.component.scss'],
 })
-export class ModalComponent {
+export class GameStartModalComponent {
 
   public opponent: Globals.User;
 
