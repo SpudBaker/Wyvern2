@@ -11,9 +11,25 @@
 </ion-header>
 
 <ion-content>
-  <div *ngIf="usersArr$ | async as userArr">
-    <div *ngFor="let user of userArr">
-      {{user}} ghjk
+  <ion-grid>
+    <div *ngIf="usersArr$ | async as userArr">
+      <div *ngFor="let user of userArr">
+        <ion-row>
+          <ion-col size="4"></ion-col>
+          <ion-col size="4">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>{{user.email}}</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                Score : {{user.score}}
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          <ion-col size="0.5"></ion-col>
+          <ion-col size="4"></ion-col>
+        </ion-row>
+      </div>
     </div>
-  </div>
+  </ion-grid>
 </ion-content>

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { addDoc, collection, collectionData, doc, docSnapshots, DocumentData, DocumentReference, Firestore, getDoc, getDocs, getFirestore, query, runTransaction, where } from '@angular/fire/firestore';
+import { addDoc, collection, collectionData, doc, docSnapshots, DocumentData, DocumentReference, Firestore, getDoc, getDocs, getFirestore, orderBy, query, runTransaction, where } from '@angular/fire/firestore';
 import * as Globals from '../,,/../../globals';
 import { AuthService } from '../services/auth';
-import { EMPTY, Observable } from 'rxjs';
+import { EMPTY, from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
@@ -140,12 +140,16 @@ export class GameService{
       }
     }
 
-    public getUsers(): Observable<string[]>{
+    public getUsers(): Observable<Globals.User[]>{
       const usercol = collection(this.firestore, 'users');
-      return collectionData(usercol).pipe(
+      const q = query(usercol, orderBy('score',"desc"));
+      return from(getDocs(q))
+      .pipe(
         map(arr => {
-          const retArr = new Array<string>();
-          arr.forEach(doc => {retArr.push(doc.email)});
+          const retArr = new Array<Globals.User>();
+          arr.forEach(doc => {
+            retArr.push(doc.data() as Globals.User);
+          });
           return retArr;
         })
       )
