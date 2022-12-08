@@ -24,7 +24,7 @@ export class GameFinishModalComponent {
   constructor(private authService: AuthService, private LoadingController: LoadingController , private modalController: ModalController) {
   }
 
-  calculateScores(): Observable<any>{
+  calculateScoresAndUpdateUsers(): Observable<any>{
     if((this.winner.score - this.loser.score) >= 0){
       this.winnerChange = Math.floor(0.05 * this.loser.score);
       this.loserChange = 0 - this.winnerChange;
@@ -39,9 +39,13 @@ export class GameFinishModalComponent {
         this.winnerChange = Math.floor(0.3 * this.winner.score);
       }
     }
+    const winnerGames: string[] = [...this.winner.games]
+    winnerGames.push(this.game.id);
+    const loserGames: string[] = [...this.loser.games]
+    loserGames.push(this.game.id);
     return forkJoin({
-      winner: this.authService.updateUserScore(this.winner, this.winnerChange),
-      loser: this.authService.updateUserScore(this.loser, this.loserChange)
+      winner: this.authService.updateUserScore(this.winner, this.winnerChange, winnerGames),
+      loser: this.authService.updateUserScore(this.loser, this.loserChange, loserGames)
     })
   }
 
@@ -81,7 +85,7 @@ export class GameFinishModalComponent {
       switchMap(val => {
         this.loser = val.loser;
         this.winner = val.winner;
-        return this.calculateScores()
+        return this.calculateScoresAndUpdateUsers()
       }),
       switchMap(() => {
         this.pageInitiated = true;

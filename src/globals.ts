@@ -80,4 +80,5 @@ export class User {
   email: string;
   id: string;
   score: number;
+  games = new Array<string>();
 }

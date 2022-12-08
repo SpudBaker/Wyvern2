@@ -90,8 +90,8 @@ export class AuthService{
         signOut(this.auth);
     }
  
-    public updateUserScore(user: Globals.User, scoreChange: number): Promise<any>{
-        return updateDoc(doc(this.firestore, 'users/' + user.id), {score: user.score + scoreChange})
+    public updateUserScore(user: Globals.User, scoreChange: number, games: string[]): Promise<any>{
+        return updateDoc(doc(this.firestore, 'users/' + user.id), {score: user.score + scoreChange, games})
     }
 
 }
