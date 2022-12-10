@@ -1,3 +1,5 @@
+import { Timestamp } from "@angular/fire/firestore";
+
 export enum GameState {
   WAITING_FOR_PLAYERS = 'waitingForPlayers',
   IN_PROGRESS = 'inProgress',
@@ -37,6 +39,7 @@ export class Piece {
 export class Game {
   id: string;
   gameState: GameState;
+  lastUpdate: Timestamp;
   player1: string;
   player1Board: GameModel;
   player2: string;

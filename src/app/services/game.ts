@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { addDoc, collection, collectionData, doc, docSnapshots, DocumentData, DocumentReference, Firestore, getDoc, getDocs, getFirestore, orderBy, query, runTransaction, where } from '@angular/fire/firestore';
+import { addDoc, collection, doc, docSnapshots, DocumentData, DocumentReference, Firestore, getDoc, getDocs, orderBy, query, runTransaction, Timestamp, where } from '@angular/fire/firestore';
 import * as Globals from '../,,/../../globals';
 import { AuthService } from '../services/auth';
 import { EMPTY, from, Observable } from 'rxjs';
@@ -59,6 +59,7 @@ export class GameService{
         });
         if (!matchedDoc){
           const dref = await addDoc( gamesCollection, {
+            lastUpdate: Timestamp.fromDate(new Date()),
             player1: this.authService.getUserId(),
             player1Board: JSON.stringify(gameModel),
             gameState: Globals.GameState.WAITING_FOR_PLAYERS
@@ -70,14 +71,14 @@ export class GameService{
           await runTransaction(this.firestore, async transaction => {
             const sfDoc = await transaction.get(matchedDoc);
             if (sfDoc.get('gameState')===Globals.GameState.WAITING_FOR_PLAYERS) {
-                transaction.update(matchedDoc, { player2: this.authService.getUserId() });
-                transaction.update(matchedDoc, { player2Board: JSON.stringify(gameModel)});
-                transaction.update(matchedDoc, { gameState: Globals.GameState.IN_PROGRESS });
+                transaction.update(matchedDoc, { player2: this.authService.getUserId(), 
+                  lastUpdate: Timestamp.fromDate(new Date()), 
+                  player2Board: JSON.stringify(gameModel), 
+                  gameState: Globals.GameState.IN_PROGRESS });
             } else {
                 const dref = await addDoc( gamesCollection, {
-                    player1: this.authService.getUserId(),
-                    player1Board: JSON.stringify(gameModel),
-                    gameState: Globals.GameState.WAITING_FOR_PLAYERS
+                    player1: this.authService.getUserId(), lastUpdate: Timestamp.fromDate(new Date()), 
+                    player1Board: JSON.stringify(gameModel), gameState: Globals.GameState.WAITING_FOR_PLAYERS
                     }
                 );
             }
@@ -164,12 +165,12 @@ export class GameService{
       await runTransaction(this.firestore, async transaction => {
         if((await getDoc(docRef)).data().gameState != Globals.GameState.FINISHED){
           if(this.authService.getUserId() == game.player1){
-            transaction.update(docRef, { player2Board: JSON.stringify(gameModel)});
+            transaction.update(docRef, { player2Board: JSON.stringify(gameModel), lastUpdate: Timestamp.fromDate(new Date())});
           } else {
-            transaction.update(docRef, { player1Board: JSON.stringify(gameModel)});
+            transaction.update(docRef, { player1Board: JSON.stringify(gameModel), lastUpdate: Timestamp.fromDate(new Date())});
           }
           if (finished) {
-            transaction.update(docRef, { gameState: Globals.GameState.FINISHED});
+            transaction.update(docRef, { gameState: Globals.GameState.FINISHED, lastUpdate: Timestamp.fromDate(new Date())});
           }
         }
     });
