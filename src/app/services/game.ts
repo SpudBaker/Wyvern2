@@ -161,7 +161,7 @@ export class GameService{
       this.router.navigate(['home']);
     }
 
-    public async pushGameModelToFirebase(game: Globals.Game, gameModel: Globals.GameModel, finished: boolean): Promise<any> {
+    public async pushGameModelToFirebase(game: Globals.Game, gameModel: Globals.GameModel, finished: boolean, winner?: string, loser?: string, resultReason?: Globals.ResultReason): Promise<any> {
       const docRef = doc(this.firestore, "games", game.id) as DocumentReference;
       await runTransaction(this.firestore, async transaction => {
         if((await getDoc(docRef)).data().gameState != Globals.GameState.FINISHED){
@@ -171,7 +171,7 @@ export class GameService{
             transaction.update(docRef, { player1Board: JSON.stringify(gameModel), lastUpdate: Timestamp.fromDate(new Date())});
           }
           if (finished) {
-            transaction.update(docRef, { gameState: Globals.GameState.FINISHED, lastUpdate: Timestamp.fromDate(new Date())});
+            transaction.update(docRef, { gameState: Globals.GameState.FINISHED, lastUpdate: Timestamp.fromDate(new Date()), winner, loser, resultReason});
           }
         }
     });

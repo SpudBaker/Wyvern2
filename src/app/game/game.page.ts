@@ -217,6 +217,9 @@ export class GamePage {
 
   public squareClick(gm: Globals.GameModel, h: number, v: number): void{
     let finished : boolean;
+    let winner: string;
+    let loser: string;
+    let resultReason: Globals.ResultReason;
     if(this.squareClickedPending){return}
     if(this.game.player1 == this.authService.getUserId()){
       if(this.game.player2Board.turns > this.game.player1Board.turns){return}
@@ -278,8 +281,11 @@ export class GamePage {
     } 
     if ((gameModel.marker.horizontal == gameModel.target.horizontal) && (gameModel.marker.vertical == gameModel.target.vertical)){
       finished = true;
+      resultReason = Globals.ResultReason.TARGETFOUND;
+      winner = this.authService.getUserId();
+      loser = (this.game.player1 == this.authService.getUserId()) ? this.game.player1 : this.game.player2;
     }
-    this.gameService.pushGameModelToFirebase(this.game, gameModel, finished )
+    this.gameService.pushGameModelToFirebase(this.game, gameModel, finished, winner, loser, resultReason)
     .then(() => this.squareClickedPending = false)
     .catch(err => {
       console.log(err);

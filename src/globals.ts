@@ -8,7 +8,7 @@ export enum turnText {
 export enum GameState {
   WAITING_FOR_PLAYERS = 'waitingForPlayers',
   IN_PROGRESS = 'inProgress',
-  FINISHED = 'finished'
+  FINISHED = 'finished',
 }
 
 export enum EdgeState {
@@ -45,10 +45,18 @@ export class Game {
   id: string;
   gameState: GameState;
   lastUpdate: Timestamp;
+  loser: string;
   player1: string;
   player1Board: GameModel;
   player2: string;
   player2Board: GameModel;
+  result: ResultReason;
+  winner: string;
+}
+
+export enum ResultReason{
+  TARGETFOUND = 'TARGETFOUND',
+  TIMEOUT = 'TIMEOUT'
 }
   
 export class GameModel {
