@@ -92,6 +92,7 @@ export class GameService{
       const game: Globals.Game = new Globals.Game();
       game.id = doc.id;
       game.gameState = doc.data().gameState;
+      game.lastUpdate = doc.data().lastUpdate;
       game.player1 = doc.data().player1;
       game.player2 = doc.data().player2;
       game.player1Board = doc.data().player1Board ? JSON.parse(doc.data().player1Board) : undefined;

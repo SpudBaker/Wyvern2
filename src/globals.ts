@@ -1,5 +1,10 @@
 import { Timestamp } from "@angular/fire/firestore";
 
+export enum turnText {
+  WAITING = 'Waiting Opponent ......',
+  YOU_CAN_PLAY = 'You can play'
+}
+
 export enum GameState {
   WAITING_FOR_PLAYERS = 'waitingForPlayers',
   IN_PROGRESS = 'inProgress',
