@@ -2,7 +2,7 @@
 new winner, loser, result reason values
 - updates when target found - done
 
-- updates on timout
+- updates on timeout
 - results page
 - stats page
 

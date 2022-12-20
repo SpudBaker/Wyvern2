@@ -97,6 +97,9 @@ export class GameService{
       game.player2 = doc.data().player2;
       game.player1Board = doc.data().player1Board ? JSON.parse(doc.data().player1Board) : undefined;
       game.player2Board = doc.data().player2Board ? JSON.parse(doc.data().player2Board) : undefined;
+      game.winner = doc.data().winner;
+      game.loser = doc.data().loser;
+      game.result = doc.data().result;
       return game;
     }
 

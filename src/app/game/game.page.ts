@@ -283,7 +283,7 @@ export class GamePage {
       finished = true;
       resultReason = Globals.ResultReason.TARGETFOUND;
       winner = this.authService.getUserId();
-      loser = (this.game.player1 == this.authService.getUserId()) ? this.game.player1 : this.game.player2;
+      loser = (this.game.player1 == this.authService.getUserId()) ? this.game.player2 : this.game.player1;
     }
     this.gameService.pushGameModelToFirebase(this.game, gameModel, finished, winner, loser, resultReason)
     .then(() => this.squareClickedPending = false)
