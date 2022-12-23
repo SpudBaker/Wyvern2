@@ -151,8 +151,8 @@
             "prerender": false,
             "ssr": false,
             "browserTarget": "app:build:production",
-            "firebaseProject": "wyvern-42d25",
-            "firebaseHostingSite": "wyvern-42d25"
+            "firebaseProject": "pfriday-d8515",
+            "firebaseHostingSite": "pfriday-d8515"
           }
         }
       }

@@ -5,7 +5,7 @@
   },
   "hosting": [
     {
-      "site": "wyverngame-1d3e9",
+      "site": "pfriday-d8515",
       "public": "www",
       "ignore": [
         "firebase.json",
